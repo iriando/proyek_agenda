@@ -7,6 +7,7 @@ use App\Models\User;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -15,14 +16,19 @@ class PemateriRelationManager extends RelationManager
 {
     protected static string $relationship = 'pemateri';
 
+
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')
                 ->searchable()
-                ->getSearchResultsUsing(fn (string $search): array => User::where('role', 'pemateri')->pluck('name', 'id')->toArray())
-                ->getOptionLabelUsing(fn ($value): ?string => User::find($value)?->name),
+                // ->getSearchResultsUsing(fn (string $search): array => User::role('Pemateri')->pluck('name', 'id')->toArray())
+                // ->getOptionLabelUsing(fn ($value): ?string => User::find($value)?->name),
+                ->label('User id')
+                ->options(User::query()->role('pemateri')->pluck('name', 'id'))
+                ->searchable()
+                ->required(),
             ]);
     }
 
@@ -33,6 +39,7 @@ class PemateriRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                 ->label('Nama'),
+                Tables\Columns\TextColumn::make('user.roles.name')
             ])
             ->filters([
                 //

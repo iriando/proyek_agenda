@@ -2,24 +2,32 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\User;
 use Filament\Forms;
+use App\Models\User;
+use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
-use Filament\Resources\Pages\CreateRecord;
-use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
+use App\Policies\UserPolicy;
+use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\Pages\CreateRecord;
+use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\UserResource\RelationManagers;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
+
+    public static function authorizeResource(): ?string
+    {
+        return UserPolicy::class;
+    }
 
     public static function form(Form $form): Form
     {
@@ -35,6 +43,8 @@ class UserResource extends Resource
                 // Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
                     ->password()
+                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
+                    ->dehydrated(fn (?string $state):bool => filled($state))
                     ->required(fn (Page $livewire):bool => $livewire instanceof CreateRecord)
                     ->maxLength(191),
                 Forms\Components\Select::make('roles')
@@ -51,7 +61,7 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('roles'),
+                Tables\Columns\TextColumn::make('roles.name'),
                 // Tables\Columns\TextColumn::make('email_verified_at')
                 //     ->dateTime()
                 //     ->sortable(),

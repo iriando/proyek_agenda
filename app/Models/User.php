@@ -49,7 +49,7 @@ class User extends Authenticatable
         return $this->hasMany(Pemateri::class, 'user_id', 'id');
     }
 
-    public function roles(){
+    public function role(){
     return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
     }
 }

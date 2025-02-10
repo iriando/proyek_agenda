@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pemateri extends Model
 {
@@ -20,4 +21,8 @@ class Pemateri extends Model
     public function user(){
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    // public function role(){
+    //     return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
+    //     }
 }
