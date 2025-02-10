@@ -24,6 +24,14 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        if (auth()->user()->can('view users'))
+            return true;
+        else
+            return false;
+    }
+
     public static function authorizeResource(): ?string
     {
         return UserPolicy::class;

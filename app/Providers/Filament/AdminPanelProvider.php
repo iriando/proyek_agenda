@@ -87,7 +87,8 @@ class AdminPanelProvider extends PanelProvider
                             'filament.admin.resources.roles.edit',
                             'filament.admin.resources.roles.view'
                         ]))
-                        ->url(fn (): string => '/admin/roles'),
+                        ->url(fn (): string => '/admin/roles')
+                        ->visible(fn(): bool => auth()->user()->can('view roles')),
 
                         NavigationItem::make('Permissions')
                         ->icon('heroicon-o-lock-closed')
@@ -97,7 +98,8 @@ class AdminPanelProvider extends PanelProvider
                             'filament.admin.resources.permissions.edit',
                             'filament.admin.resources.permissions.view'
                         ]))
-                        ->url(fn (): string => '/admin/permissions'),
+                        ->url(fn (): string => '/admin/permissions')
+                        ->visible(fn(): bool => auth()->user()->can('view permission')),
                     ]),
                 ]);
             });

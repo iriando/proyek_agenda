@@ -23,13 +23,13 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('taufik112166'),
         ]);
 
-        \App\Models\Agenda::create([
-            'judul' => 'Agenda 1',
-            'deskripsi' => 'ya begitulah',
-            'zoomlink' => 'ini zoom link',
-            'tanggal_pelaksanaan' => '2025-02-08',
-            'status' => 1,
+        $pemateri = User::factory()->create([
+            'name' => 'dian',
+            'email' => 'dian@gmail.com',
+            'password' => bcrypt('12345'),
         ]);
+
+
 
         \App\Models\Agenda::create([
             'judul' => 'Agenda 1',
@@ -45,7 +45,31 @@ class DatabaseSeeder extends Seeder
             'edit users',
             'delete users',
             'restore users',
-            'force delete users'
+            'force delete users',
+            'view roles',
+            'create roles',
+            'edit roles',
+            'delete roles',
+            'restore roles',
+            'force delete roles',
+            'view permission',
+            'create permission',
+            'edit permission',
+            'delete permission',
+            'restore permission',
+            'force delete permission',
+            'view agenda',
+            'create agenda',
+            'edit agenda',
+            'delete agenda',
+            'restore agenda',
+            'force delete agenda',
+            'view materi',
+            'create materi',
+            'edit materi',
+            'delete materi',
+            'restore materi',
+            'force delete materi',
         ];
 
         foreach ($permissions as $permission) {
@@ -57,7 +81,9 @@ class DatabaseSeeder extends Seeder
 
         // Assign permission ke role admin
         $adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+        $pemateriRole = Role::firstOrCreate(['name' => 'pemateri', 'guard_name' => 'web']);
         $adminRole->givePermissionTo($permissions);
         $userAdmin->assignRole('admin');
+        $pemateri->assignRole('pemateri');
     }
 }
