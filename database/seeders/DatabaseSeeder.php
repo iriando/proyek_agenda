@@ -31,6 +31,14 @@ class DatabaseSeeder extends Seeder
             'status' => 1,
         ]);
 
+        \App\Models\Agenda::create([
+            'judul' => 'Agenda 1',
+            'deskripsi' => 'ya begitulah',
+            'zoomlink' => 'ini zoom link',
+            'tanggal_pelaksanaan' => '2025-02-08',
+            'status' => 1,
+        ]);
+
         $permissions = [
             'view users',
             'create users',
