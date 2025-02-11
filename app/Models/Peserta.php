@@ -9,11 +9,16 @@ class Peserta extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'user_id',
         'agenda_id',
         'nama',
     ];
 
     public function agenda(){
         return $this->belongsTo(Agenda::class, 'agenda_id', 'id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

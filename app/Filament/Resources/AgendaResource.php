@@ -23,6 +23,14 @@ class AgendaResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
     protected static ?string $navigationLabel = 'Kegiatan';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        if (auth()->user()->can('view agenda'))
+            return true;
+        else
+            return false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form

@@ -29,7 +29,8 @@ class PesertaRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('nama')
             ->columns([
-                Tables\Columns\TextColumn::make('user.name'),
+                Tables\Columns\TextColumn::make('user.name')->label('Nama'),
+                Tables\Columns\TextColumn::make('user.roles.name')
             ])
             ->filters([
                 //

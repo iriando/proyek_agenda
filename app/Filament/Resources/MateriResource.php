@@ -20,6 +20,14 @@ class MateriResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document';
     protected static ?string $navigationLabel = 'Materi kegiatan';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        if (auth()->user()->can('view materi'))
+            return true;
+        else
+            return false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form

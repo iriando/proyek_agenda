@@ -29,6 +29,12 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345'),
         ]);
 
+        $peserta = User::factory()->create([
+            'name' => 'hendra',
+            'email' => 'hendra@gmail.com',
+            'password' => bcrypt('12345678'),
+        ]);
+
 
 
         \App\Models\Agenda::create([
@@ -81,9 +87,11 @@ class DatabaseSeeder extends Seeder
 
         // Assign permission ke role admin
         $adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
-        $pemateriRole = Role::firstOrCreate(['name' => 'pemateri', 'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'pemateri', 'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'peserta', 'guard_name' => 'web']);
         $adminRole->givePermissionTo($permissions);
         $userAdmin->assignRole('admin');
         $pemateri->assignRole('pemateri');
+        $peserta->assignRole('peserta');
     }
 }
