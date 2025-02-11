@@ -56,7 +56,6 @@ class UserResource extends Resource
                     ->required(fn (Page $livewire):bool => $livewire instanceof CreateRecord)
                     ->maxLength(191),
                 Forms\Components\Select::make('roles')
-                    ->multiple()
                     ->relationship('roles', 'name'),
             ]);
     }

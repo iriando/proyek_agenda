@@ -22,10 +22,8 @@ class PemateriRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')
+                ->label('Pilih nama pemateri')
                 ->searchable()
-                // ->getSearchResultsUsing(fn (string $search): array => User::role('Pemateri')->pluck('name', 'id')->toArray())
-                // ->getOptionLabelUsing(fn ($value): ?string => User::find($value)?->name),
-                ->label('User id')
                 ->options(User::query()->role('pemateri')->pluck('name', 'id'))
                 ->searchable()
                 ->required(),
