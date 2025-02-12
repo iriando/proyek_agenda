@@ -17,20 +17,27 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        $userAdmin = User::factory()->create([
+        $adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+        $pemateriRole = Role::firstOrCreate(['name' => 'pemateri', 'guard_name' => 'web']);
+        $pesertaRole = Role::firstOrCreate(['name' => 'peserta', 'guard_name' => 'web']);
+
+        $userAdmin = User::create([
             'name' => 'taufik',
+            'nip' => '199308012022031001',
             'email' => 'taufik.iriando@gmail.com',
             'password' => bcrypt('taufik112166'),
         ]);
 
-        $pemateri = User::factory()->create([
+        $pemateri = User::create([
             'name' => 'dian',
+            'nip' => '199008012022032001',
             'email' => 'dian@gmail.com',
             'password' => bcrypt('12345'),
         ]);
 
-        $peserta = User::factory()->create([
+        $peserta = User::create([
             'name' => 'hendra',
+            'nip' => '198702012018011001',
             'email' => 'hendra@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
@@ -86,9 +93,6 @@ class DatabaseSeeder extends Seeder
         }
 
         // Assign permission ke role admin
-        $adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
-        Role::firstOrCreate(['name' => 'pemateri', 'guard_name' => 'web']);
-        Role::firstOrCreate(['name' => 'peserta', 'guard_name' => 'web']);
         $adminRole->givePermissionTo($permissions);
         $userAdmin->assignRole('admin');
         $pemateri->assignRole('pemateri');

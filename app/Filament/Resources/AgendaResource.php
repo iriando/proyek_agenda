@@ -2,19 +2,20 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms;
+use Filament\Tables;
+use App\Models\Agenda;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use Illuminate\Support\Carbon;
+use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AgendaResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AgendaResource\RelationManagers;
 use App\Filament\Resources\AgendaResource\RelationManagers\MateriRelationManager;
-use App\Filament\Resources\AgendaResource\RelationManagers\PemateriRelationManager;
 use App\Filament\Resources\AgendaResource\RelationManagers\PesertaRelationManager;
-use App\Models\Agenda;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\AgendaResource\RelationManagers\PemateriRelationManager;
 
 class AgendaResource extends Resource
 {
@@ -52,6 +53,7 @@ class AgendaResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modelLabel('Kegiatan')
             ->columns([
                 Tables\Columns\TextColumn::make('judul')
                     ->searchable(),
@@ -62,7 +64,20 @@ class AgendaResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('status')
-                    ->boolean(),
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-circle') // Ikon aktif
+                    ->falseIcon('heroicon-o-x-circle') // Ikon nonaktif
+                    ->colors([
+                        'success' => fn ($record) => $record->status && !Carbon::parse($record->tanggal_pelaksanaan)->isPast(),
+                        'danger' => fn ($record) => !$record->status || Carbon::parse($record->tanggal_pelaksanaan)->isPast(),
+                    ])
+                    ->tooltip(fn ($record) =>
+                        !$record->status && Carbon::parse($record->tanggal_pelaksanaan)->isPast()
+                            ? 'Peraturan sudah tidak berlaku'
+                            : ($record->status && Carbon::parse($record->tanggal_pelaksanaan)->isPast()
+                                ? 'Tanggal pelaksanaan sudah berakhir'
+                                : 'Agenda masih aktif')
+                        ),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -77,9 +92,9 @@ class AgendaResource extends Resource
             ])
 
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                Tables\Actions\ViewAction::make()->label('Lihat'),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->label('Hapus'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -109,4 +124,10 @@ class AgendaResource extends Resource
             'edit' => Pages\EditAgenda::route('/{record}/edit'),
         ];
     }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Kegiatan';
+    }
+
 }

@@ -23,6 +23,7 @@ class PemateriRelationManager extends RelationManager
             ->schema([
                 Forms\Components\Select::make('user_id')
                 ->label('Pilih nama pemateri')
+                // ->multiple()
                 ->searchable()
                 ->options(User::query()->role('pemateri')->pluck('name', 'id'))
                 ->searchable()
