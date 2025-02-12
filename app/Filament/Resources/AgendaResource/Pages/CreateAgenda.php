@@ -14,4 +14,9 @@ class CreateAgenda extends CreateRecord
     {
         return 'Buat kegiatan';
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }
