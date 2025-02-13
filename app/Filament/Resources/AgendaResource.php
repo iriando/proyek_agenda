@@ -92,9 +92,9 @@ class AgendaResource extends Resource
             ])
 
             ->actions([
-                Tables\Actions\ViewAction::make()->label('Lihat'),
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()->label('Hapus'),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

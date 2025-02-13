@@ -21,4 +21,16 @@ class CalendarWidget extends FullCalendarWidget
             ];
         })->toArray();
     }
+
+    public function config(): array
+    {
+        return [
+            'firstDay' => 1,
+            'headerToolbar' => [
+                'right' => '',
+                'center' => 'title',
+                'left' => 'prev,next',
+            ],
+        ];
+    }
 }

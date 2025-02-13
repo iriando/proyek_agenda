@@ -109,6 +109,13 @@ class AdminPanelProvider extends PanelProvider
             })
             ->plugin(
                 FilamentFullCalendarPlugin::make()
+                // ->schedulerLicenseKey()
+                    ->selectable()
+                    ->editable()
+                    // ->timezone()
+                    // ->locale()
+                    // ->plugins()
+                    // ->config()
             );
     }
 
