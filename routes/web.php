@@ -17,6 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('/notifications/read-all', function () {
+    auth()->user()->unreadNotifications->markAsRead();
+
+    return response()->json(['message' => 'Semua notifikasi telah dibaca']);
+})->name('notifications.read-all');
+
 // Route::get('/admin/register', function(){
 
 // })
