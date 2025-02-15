@@ -10,6 +10,11 @@ class ViewMateri extends ViewRecord
 {
     protected static string $resource = MateriResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Lihat materi';
+    }
+
     protected function getHeaderActions(): array
     {
         return [

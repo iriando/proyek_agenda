@@ -55,4 +55,9 @@ class MateriRelationManager extends RelationManager
                 // Tables\Actions\CreateAction::make(),
             ]);
     }
+
+    public function getContentTabIcon(): ?string
+    {
+        return 'heroicon-m-cog';
+    }
 }

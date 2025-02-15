@@ -47,4 +47,10 @@ class ViewAgenda extends ViewRecord
             'agenda_id' => $agendaId,
         ]);
     }
+
+    public function getTitle(): string
+    {
+        return 'Lihat kegiatan';
+    }
+
 }

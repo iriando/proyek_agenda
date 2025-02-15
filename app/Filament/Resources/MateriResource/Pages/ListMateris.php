@@ -10,6 +10,12 @@ class ListMateris extends ListRecords
 {
     protected static string $resource = MateriResource::class;
 
+
+    public function getTitle(): string
+    {
+        return 'Materi';
+    }
+
     protected function getHeaderActions(): array
     {
         return [
