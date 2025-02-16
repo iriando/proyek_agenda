@@ -31,7 +31,7 @@ class ViewAgenda extends ViewRecord
 
         return $isRegistered ? [] : [
             // Jika sudah terdaftar, jangan tampilkan tombol
-            Action::make('Daftarkan')
+            Action::make('Daftar')
                 ->color('warning')
                 ->action(fn () => $this->daftarkanPeserta())
                 ->hidden(fn ($record) => Carbon::now()->greaterThan($record->tanggal_pelaksanaan)),
@@ -40,7 +40,7 @@ class ViewAgenda extends ViewRecord
                 ->color('success')
                 ->icon('heroicon-o-document-text')
                 ->url(fn () => $this->record->survey ? route('filament.pages.submit-survey', ['survey' => $this->record->survey->id]) : '#')
-                ->visible(fn () => $this->record->survey !== null), // Hanya tampil jika ada survei
+                ->visible(fn () => $this->record->status === 'Selesai' && $this->record->survey !== null), // Hanya tampil jika ada survei dan agenda sudah selesai
         ];
     }
 

@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
             'deskripsi' => 'ya begitulah',
             'zoomlink' => 'ini zoom link',
             'tanggal_pelaksanaan' => '2025-02-08',
-            'status' => 1,
+            'tanggal_selesai' => '2025-02-09',
         ]);
 
         $permissions = [

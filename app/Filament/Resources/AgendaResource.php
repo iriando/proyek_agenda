@@ -43,10 +43,20 @@ class AgendaResource extends Resource
                 Forms\Components\TextInput::make('zoomlink')
                     ->required()
                     ->maxLength(191),
-                Forms\Components\DatePicker::make('tanggal_pelaksanaan')
+                Forms\Components\DateTimePicker::make('tanggal_pelaksanaan')
+                    ->label('waktu dan tanggal pelaksanaan')
+                    ->displayFormat('Y-m-d H:i:s')
                     ->required(),
-                Forms\Components\Toggle::make('status')
+                Forms\Components\DateTimePicker::make('tanggal_selesai')
+                    ->label('waktu dan tanggal selesai')
+                    ->displayFormat('Y-m-d H:i:s')
+                    ->after('tanggal_pelaksanaan')
+                    ->rules('after:tanggal_pelaksanaan')
                     ->required(),
+                Forms\Components\TextInput::make('status')
+                ->label('Status')
+                ->disabled()
+                ->default(fn ($record) => $record?->status),
             ]);
     }
 
@@ -61,23 +71,18 @@ class AgendaResource extends Resource
                 ->label('Pemateri')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tanggal_pelaksanaan')
-                    ->date()
+                    ->dateTime('d M Y H:i')
                     ->sortable(),
-                Tables\Columns\IconColumn::make('status')
-                    ->boolean()
-                    ->trueIcon('heroicon-o-check-circle') // Ikon aktif
-                    ->falseIcon('heroicon-o-x-circle') // Ikon nonaktif
-                    ->colors([
-                        'success' => fn ($record) => $record->status && !Carbon::parse($record->tanggal_pelaksanaan)->isPast(),
-                        'danger' => fn ($record) => !$record->status || Carbon::parse($record->tanggal_pelaksanaan)->isPast(),
-                    ])
-                    ->tooltip(fn ($record) =>
-                        !$record->status && Carbon::parse($record->tanggal_pelaksanaan)->isPast()
-                            ? 'Agenda non aktif'
-                            : ($record->status && Carbon::parse($record->tanggal_pelaksanaan)->isPast()
-                                ? 'Tanggal pelaksanaan sudah berakhir'
-                                : 'Agenda masih aktif')
-                        ),
+                Tables\Columns\TextColumn::make('tanggal_selesai')
+                    ->dateTime('d M Y H:i'),
+                Tables\Columns\BadgeColumn::make('status')
+                ->label('Status')
+                ->colors([
+                    'warning' => fn ($state) => trim($state) === 'Belum Dimulai',
+                    'success' => fn ($state) => trim($state) === 'Sedang Berlangsung',
+                    'primary' => fn ($state) => trim($state) === 'Selesai',
+                ])
+                ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
