@@ -23,7 +23,7 @@ class ViewAgenda extends ViewRecord
             // Cek apakah user memiliki role selain "peserta"
         if (!$user->hasRole('peserta')) {
             return [];
-    }
+        }
         // Cek apakah user sudah terdaftar dalam agenda ini
         $isRegistered = Peserta::where('user_id', $userId)
                         ->where('agenda_id', $agendaId)
@@ -35,6 +35,12 @@ class ViewAgenda extends ViewRecord
                 ->color('warning')
                 ->action(fn () => $this->daftarkanPeserta())
                 ->hidden(fn ($record) => Carbon::now()->greaterThan($record->tanggal_pelaksanaan)),
+            Action::make('isi_survei')
+                ->label('Isi Survei')
+                ->color('success')
+                ->icon('heroicon-o-document-text')
+                ->url(fn () => $this->record->survey ? route('filament.pages.submit-survey', ['survey' => $this->record->survey->id]) : '#')
+                ->visible(fn () => $this->record->survey !== null), // Hanya tampil jika ada survei
         ];
     }
 

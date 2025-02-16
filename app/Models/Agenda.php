@@ -27,4 +27,8 @@ class Agenda extends Model
     public function peserta(){
         return $this->hasMany(Peserta::class);
     }
+
+    public function survey(){
+        return $this->hasOne(Survey::class);
+    }
 }

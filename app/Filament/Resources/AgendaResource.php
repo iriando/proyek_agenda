@@ -73,7 +73,7 @@ class AgendaResource extends Resource
                     ])
                     ->tooltip(fn ($record) =>
                         !$record->status && Carbon::parse($record->tanggal_pelaksanaan)->isPast()
-                            ? 'Peraturan sudah tidak berlaku'
+                            ? 'Agenda non aktif'
                             : ($record->status && Carbon::parse($record->tanggal_pelaksanaan)->isPast()
                                 ? 'Tanggal pelaksanaan sudah berakhir'
                                 : 'Agenda masih aktif')

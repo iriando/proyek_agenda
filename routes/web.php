@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Filament\Pages\SubmitSurvey;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,8 @@ Route::post('/notifications/read-all', function () {
 
     return response()->json(['message' => 'Semua notifikasi telah dibaca']);
 })->name('notifications.read-all');
+
+Route::get('/survey/{survey}', SubmitSurvey::class)->name('filament.pages.submit-survey');
 
 // Route::get('/admin/register', function(){
 

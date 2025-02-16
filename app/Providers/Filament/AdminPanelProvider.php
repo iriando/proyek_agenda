@@ -26,6 +26,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use App\Filament\Pages\SubmitSurvey;
+use App\Filament\Resources\SurveyResource;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -78,6 +80,7 @@ class AdminPanelProvider extends PanelProvider
                     ->items([
                         ...AgendaResource::getNavigationItems(),
                         ...MateriResource::getNavigationItems(),
+                        ...SurveyResource::getNavigationItems(),
                     ]),
                     NavigationGroup::make('Pengaturan')
                     ->items([
