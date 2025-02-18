@@ -83,6 +83,12 @@ class DatabaseSeeder extends Seeder
             'delete materi',
             'restore materi',
             'force delete materi',
+            'view survey',
+            'create survey',
+            'edit survey',
+            'delete survey',
+            'restore survey',
+            'force delete survey',
         ];
 
         foreach ($permissions as $permission) {
@@ -92,8 +98,32 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        $permissions2 = [
+            'view agenda',
+            'delete agenda',
+            'view materi',
+            'create materi',
+            'edit materi',
+            'delete materi',
+            'restore materi',
+            'force delete materi',
+            'view survey',
+            'create survey',
+            'edit survey',
+            'delete survey',
+            'restore survey',
+            'force delete survey',
+        ];
+
+        $permissions3 = [
+            'view agenda',
+            'view materi',
+        ];
+
         // Assign permission ke role admin
         $adminRole->givePermissionTo($permissions);
+        $pemateriRole->givePermissionTo($permissions2);
+        $pesertaRole->givePermissionTo($permissions3);
         $userAdmin->assignRole('admin');
         $pemateri->assignRole('pemateri');
         $peserta->assignRole('peserta');
