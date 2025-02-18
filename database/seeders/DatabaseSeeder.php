@@ -100,7 +100,6 @@ class DatabaseSeeder extends Seeder
 
         $permissions2 = [
             'view agenda',
-<<<<<<< HEAD
             'delete agenda',
             'view materi',
             'create materi',
@@ -114,18 +113,11 @@ class DatabaseSeeder extends Seeder
             'delete survey',
             'restore survey',
             'force delete survey',
-=======
-            'edit agenda',
-            'view materi',
->>>>>>> optimize_agenda
         ];
 
         $permissions3 = [
             'view agenda',
-<<<<<<< HEAD
             'view materi',
-=======
->>>>>>> optimize_agenda
         ];
 
         // Assign permission ke role admin
