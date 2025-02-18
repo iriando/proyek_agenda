@@ -37,7 +37,7 @@ class SurveyPolicy
      */
     public function update(User $user, Survey $survey): bool
     {
-        return $user->hasPermissionTo('update survey');
+        return $user->hasPermissionTo('edit survey');
     }
 
     /**
