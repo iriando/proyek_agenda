@@ -51,7 +51,7 @@ class Agenda extends Model
         } elseif ($now >= $tanggal_mulai && $now <= $tanggal_selesai) {
             return 'Sedang Berlangsung';
         } else {
-            return 'Selesai';
+            return 'Sudah Selesai';
         }
     }
 }
