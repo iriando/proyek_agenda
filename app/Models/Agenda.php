@@ -42,11 +42,13 @@ class Agenda extends Model
 
     public function getStatusAttribute() //update status agenda
     {
-        $now = Carbon::now();
+        $now = Carbon::now()->toDateString(); // Ambil hanya tanggal (YYYY-MM-DD)
+        $tanggal_mulai = Carbon::parse($this->tanggal_pelaksanaan)->toDateString();
+        $tanggal_selesai = Carbon::parse($this->tanggal_selesai)->toDateString();
 
-        if ($now->lt($this->tanggal_pelaksanaan)) {
+        if ($now < $tanggal_mulai) {
             return 'Belum Dimulai';
-        } elseif ($now->between($this->tanggal_pelaksanaan, $this->tanggal_selesai)) {
+        } elseif ($now >= $tanggal_mulai && $now <= $tanggal_selesai) {
             return 'Sedang Berlangsung';
         } else {
             return 'Selesai';
