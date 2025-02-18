@@ -2,16 +2,22 @@
 
 namespace App\Console;
 
+// use App\Console\Commands\UpdateAgendaStatus;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    // protected $commands = [
+    //     UpdateAgendaStatus::class,
+    // ];
     /**
      * Define the application's command schedule.
      */
     protected function schedule(Schedule $schedule): void
     {
+
+        // $schedule->command('app:update-agenda-status')->everyMinute();
         // $schedule->command('inspire')->hourly();
     }
 
