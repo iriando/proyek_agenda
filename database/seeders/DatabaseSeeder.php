@@ -92,8 +92,20 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        $permissions2 = [
+            'view agenda',
+            'edit agenda',
+            'view materi',
+        ];
+
+        $permissions3 = [
+            'view agenda',
+        ];
+
         // Assign permission ke role admin
         $adminRole->givePermissionTo($permissions);
+        $pemateriRole->givePermissionTo($permissions2);
+        $pesertaRole->givePermissionTo($permissions3);
         $userAdmin->assignRole('admin');
         $pemateri->assignRole('pemateri');
         $peserta->assignRole('peserta');

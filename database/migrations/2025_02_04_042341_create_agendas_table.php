@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('zoomlink');
             $table->datetime('tanggal_pelaksanaan');
             $table->datetime('tanggal_selesai');
-            $table->enum('status', ['Belum Dimulai', 'Sedang Berlangsung', 'Selesai'])
-                ->default('Belum Dimulai');
+            // $table->enum('status', ['Belum Dimulai', 'Sedang Berlangsung', 'Selesai'])
+            //     ->default('Belum Dimulai');
             $table->timestamps();
         });
     }

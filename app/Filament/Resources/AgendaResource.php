@@ -75,14 +75,14 @@ class AgendaResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tanggal_selesai')
                     ->dateTime('d M Y H:i'),
-                Tables\Columns\BadgeColumn::make('status')
-                ->label('Status')
-                ->colors([
-                    'warning' => fn ($state) => trim($state) === 'Belum Dimulai',
-                    'success' => fn ($state) => trim($state) === 'Sedang Berlangsung',
-                    'primary' => fn ($state) => trim($state) === 'Selesai',
-                ])
-                ->sortable(),
+                Tables\Columns\BadgeColumn::make('status') // Ambil status otomatis dari getStatusAttribute()
+                    ->label('Status')
+                    ->colors([
+                        'warning' => 'Belum Dimulai',
+                        'success' => 'Sedang Berlangsung',
+                        'primary' => 'Selesai',
+                    ])
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -15,7 +15,7 @@ class Agenda extends Model
         'zoomlink',
         'tanggal_pelaksanaan',
         'tanggal_selesai',
-        'status',
+        // 'status',
     ];
 
     protected $casts = [
@@ -40,17 +40,16 @@ class Agenda extends Model
         return $this->hasOne(Survey::class);
     }
 
-    public function updateStatus() //update status agenda
+    public function getStatusAttribute() //update status agenda
     {
         $now = Carbon::now();
 
         if ($now->lt($this->tanggal_pelaksanaan)) {
-            $this->status = 'Belum Dimulai';
+            return 'Belum Dimulai';
         } elseif ($now->between($this->tanggal_pelaksanaan, $this->tanggal_selesai)) {
-            $this->status = 'Sedang Berlangsung';
+            return 'Sedang Berlangsung';
         } else {
-            $this->status = 'Selesai';
+            return 'Selesai';
         }
-        $this->save();
     }
 }
