@@ -5,11 +5,15 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Agenda;
+use App\Models\User;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Notifications\Actions\Action;
 use App\Filament\Resources\AgendaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AgendaResource\RelationManagers;
@@ -47,16 +51,6 @@ class AgendaResource extends Resource
                     ->label('waktu dan tanggal pelaksanaan')
                     ->displayFormat('Y-m-d H:i:s')
                     ->required(),
-                Forms\Components\DateTimePicker::make('tanggal_selesai')
-                    ->label('waktu dan tanggal selesai')
-                    ->displayFormat('Y-m-d H:i:s')
-                    ->after('tanggal_pelaksanaan')
-                    ->rules('after:tanggal_pelaksanaan')
-                    ->required(),
-                Forms\Components\TextInput::make('status')
-                ->label('Status')
-                ->disabled()
-                ->default(fn ($record) => $record?->status),
             ]);
     }
 
@@ -73,16 +67,32 @@ class AgendaResource extends Resource
                 Tables\Columns\TextColumn::make('tanggal_pelaksanaan')
                     ->dateTime('d M Y H:i')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('tanggal_selesai')
-                    ->dateTime('d M Y H:i'),
-                Tables\Columns\BadgeColumn::make('status') // Ambil status otomatis dari getStatusAttribute()
-                    ->label('Status')
-                    ->colors([
-                        'warning' => 'Belum Dimulai',
-                        'success' => 'Sedang Berlangsung',
-                        'primary' => 'Selesai',
-                    ])
-                    ->sortable(),
+                Tables\Columns\ToggleColumn::make('status')
+                    ->label('Status Survey')
+                    ->disabled(!Auth::user()->hasrole('admin'))
+                    ->updateStateUsing(function ($record, $state) {
+                        $record->update(['status' => $state]);
+                        if ($state === true) {
+                            $message = "Survey '{$record->judul}' telah diaktifkan.";
+                            $surveyUrl = $record->survey ? route('filament.pages.submit-survey', ['survey' => $record->survey->id]) : null;
+                            // Kirim notifikasi ke semua user
+                            $users = User::all();
+                            foreach ($users as $user) {
+                                Notification::make()
+                                    ->title('Survey sudah boleh di isi')
+                                    ->body($message)
+                                    ->success() // Gaya notifikasi sukses
+                                    ->actions([
+                                        \Filament\Notifications\Actions\Action::make('Isi Survei')
+                                            ->url($surveyUrl)
+                                            ->openUrlInNewTab()
+                                            ->button(),
+                                    ])
+                                    ->sendToDatabase($user);
+                            }
+                        }
+                    }),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

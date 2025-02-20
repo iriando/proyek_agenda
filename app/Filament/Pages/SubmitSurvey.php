@@ -70,8 +70,19 @@ class SubmitSurvey extends Page
         return $form->schema($schema);
     }
 
-    public function submit()
+    public function submit(Survey $surveyId)
     {
+        $userId = auth()->id();
+
+        // Cek apakah user sudah mengisi survei
+        $hasFilledSurvey = Survey_response::where('user_id', $userId)
+            ->where('survey_id', $surveyId)
+            ->exists();
+
+        if ($hasFilledSurvey) {
+            return redirect()->route('dashboard')->with('error', 'Anda sudah mengisi survei ini.');
+        }
+
         $this->validate([
             'answers.*' => 'required', // Validasi semua jawaban harus diisi
         ]);

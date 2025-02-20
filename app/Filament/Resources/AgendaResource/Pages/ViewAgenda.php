@@ -24,24 +24,31 @@ class ViewAgenda extends ViewRecord
         if (!$user->hasRole('peserta')) {
             return [];
         }
+
         // Cek apakah user sudah terdaftar dalam agenda ini
         $isRegistered = Peserta::where('user_id', $userId)
                         ->where('agenda_id', $agendaId)
                         ->exists();
 
-        return $isRegistered ? [] : [
-            // Jika sudah terdaftar, jangan tampilkan tombol
-            Action::make('Daftar')
+        $actions = [];
+        // munculkan tombol daftar kalo belum terdaftar
+        if (!$isRegistered) {
+            $actions[] = Action::make('Daftar')
                 ->color('warning')
                 ->action(fn () => $this->daftarkanPeserta())
-                ->hidden(fn ($record) => Carbon::now()->greaterThan($record->tanggal_pelaksanaan)),
-            Action::make('isi_survei')
+                ->hidden(fn () => Carbon::now()->greaterThan($this->record->tanggal_pelaksanaan));
+        }
+
+        // Tampilkan tombol "Isi Survei" jika pengguna sudah terdaftar dan survei tersedia
+        if ($isRegistered && $this->record->survey !== null) {
+            $actions[] = Action::make('isi_survei')
                 ->label('Isi Survei')
                 ->color('success')
                 ->icon('heroicon-o-document-text')
-                ->url(fn () => $this->record->survey ? route('filament.pages.submit-survey', ['survey' => $this->record->survey->id]) : '#')
-                ->visible(fn () => $this->record->status === 'Selesai' && $this->record->survey !== null), // Hanya tampil jika ada survei dan agenda sudah selesai
-        ];
+                ->url(route('filament.pages.submit-survey', ['survey' => $this->record->survey->id]));
+        }
+
+        return $actions;
     }
 
     public function daftarkanPeserta()

@@ -17,9 +17,7 @@ return new class extends Migration
             $table->string('deskripsi');
             $table->string('zoomlink');
             $table->datetime('tanggal_pelaksanaan');
-            $table->datetime('tanggal_selesai');
-            // $table->enum('status', ['Belum Dimulai', 'Sedang Berlangsung', 'Selesai'])
-            //     ->default('Belum Dimulai');
+            $table->boolean('status_survey')->default('0');
             $table->timestamps();
         });
     }
