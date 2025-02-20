@@ -3,17 +3,16 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
+use App\Models\User;
 use Filament\Tables;
 use App\Models\Agenda;
-use App\Models\User;
+use App\Models\Peserta;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
 use Illuminate\Support\Facades\Auth;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Notifications\Actions\Action;
 use App\Filament\Resources\AgendaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AgendaResource\RelationManagers;
@@ -67,17 +66,20 @@ class AgendaResource extends Resource
                 Tables\Columns\TextColumn::make('tanggal_pelaksanaan')
                     ->dateTime('d M Y H:i')
                     ->sortable(),
-                Tables\Columns\ToggleColumn::make('status')
+                Tables\Columns\ToggleColumn::make('status_survey')
                     ->label('Status Survey')
                     ->disabled(!Auth::user()->hasrole('admin'))
                     ->updateStateUsing(function ($record, $state) {
-                        $record->update(['status' => $state]);
+                        $record->update(['status_survey' => $state]);
                         if ($state === true) {
                             $message = "Survey '{$record->judul}' telah diaktifkan.";
                             $surveyUrl = $record->survey ? route('filament.pages.submit-survey', ['survey' => $record->survey->id]) : null;
                             // Kirim notifikasi ke semua user
-                            $users = User::all();
-                            foreach ($users as $user) {
+                            $peserta = Peserta::where('agenda_id', $record->id)
+                                ->with('user') // Pastikan relasi ke User dimuat
+                                ->get()
+                                ->pluck('user');
+                            foreach ($peserta as $user) {
                                 Notification::make()
                                     ->title('Survey sudah boleh di isi')
                                     ->body($message)
