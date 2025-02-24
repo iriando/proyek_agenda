@@ -74,7 +74,7 @@ class AgendaResource extends Resource
                 Tables\Columns\TextColumn::make('tanggal_selesai')
                     ->dateTime('d M Y H:i')
                     ->sortable(),
-                    Tables\Columns\BadgeColumn::make('status')
+                Tables\Columns\BadgeColumn::make('status')
                     ->label('Status')
                     ->color(fn ($record) => match ($record->status) {
                         'Belum Dimulai' => 'gray',
@@ -82,6 +82,9 @@ class AgendaResource extends Resource
                         'Selesai' => 'success',
                     })
                     ->sortable(),
+                // Tables\Columns\ToggleColumn::make('survey.is_active')
+                //     ->label('Survey')
+                //     ->disabled(!Auth::user()->hasrole('admin')),
                 // Tables\Columns\ToggleColumn::make('status_survey')
                 //     ->label('Status Survey')
                 //     ->disabled(!Auth::user()->hasrole('admin'))
