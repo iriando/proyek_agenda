@@ -50,6 +50,10 @@ class AgendaResource extends Resource
                     ->label('waktu dan tanggal pelaksanaan')
                     ->displayFormat('Y-m-d H:i:s')
                     ->required(),
+                Forms\Components\DateTimePicker::make('tanggal_selesai')
+                    ->label('waktu dan tanggal selesai')
+                    ->displayFormat('Y-m-d H:i:s')
+                    ->required(),
             ]);
     }
 
@@ -57,6 +61,7 @@ class AgendaResource extends Resource
     {
         return $table
             ->modelLabel('Kegiatan')
+            ->poll('60s')
             ->columns([
                 Tables\Columns\TextColumn::make('judul')
                     ->searchable(),
@@ -66,34 +71,45 @@ class AgendaResource extends Resource
                 Tables\Columns\TextColumn::make('tanggal_pelaksanaan')
                     ->dateTime('d M Y H:i')
                     ->sortable(),
-                Tables\Columns\ToggleColumn::make('status_survey')
-                    ->label('Status Survey')
-                    ->disabled(!Auth::user()->hasrole('admin'))
-                    ->updateStateUsing(function ($record, $state) {
-                        $record->update(['status_survey' => $state]);
-                        if ($state === true) {
-                            $message = "Survey '{$record->judul}' telah diaktifkan.";
-                            $surveyUrl = $record->survey ? route('filament.pages.submit-survey', ['survey' => $record->survey->id]) : null;
-                            // Kirim notifikasi ke semua user
-                            $peserta = Peserta::where('agenda_id', $record->id)
-                                ->with('user') // Pastikan relasi ke User dimuat
-                                ->get()
-                                ->pluck('user');
-                            foreach ($peserta as $user) {
-                                Notification::make()
-                                    ->title('Survey sudah boleh di isi')
-                                    ->body($message)
-                                    ->success() // Gaya notifikasi sukses
-                                    ->actions([
-                                        \Filament\Notifications\Actions\Action::make('Isi Survei')
-                                            ->url($surveyUrl)
-                                            ->openUrlInNewTab()
-                                            ->button(),
-                                    ])
-                                    ->sendToDatabase($user);
-                            }
-                        }
-                    }),
+                Tables\Columns\TextColumn::make('tanggal_selesai')
+                    ->dateTime('d M Y H:i')
+                    ->sortable(),
+                    Tables\Columns\BadgeColumn::make('status')
+                    ->label('Status')
+                    ->color(fn ($record) => match ($record->status) {
+                        'Belum Dimulai' => 'gray',
+                        'Sedang Berlangsung' => 'info',
+                        'Selesai' => 'success',
+                    })
+                    ->sortable(),
+                // Tables\Columns\ToggleColumn::make('status_survey')
+                //     ->label('Status Survey')
+                //     ->disabled(!Auth::user()->hasrole('admin'))
+                //     ->updateStateUsing(function ($record, $state) {
+                //         $record->update(['status_survey' => $state]);
+                //         if ($state === true) {
+                //             $message = "Survey '{$record->judul}' telah diaktifkan.";
+                //             $surveyUrl = $record->survey ? route('filament.pages.submit-survey', ['survey' => $record->survey->id]) : null;
+                //             // Kirim notifikasi ke semua user
+                //             $peserta = Peserta::where('agenda_id', $record->id)
+                //                 ->with('user') // Pastikan relasi ke User dimuat
+                //                 ->get()
+                //                 ->pluck('user');
+                //             foreach ($peserta as $user) {
+                //                 Notification::make()
+                //                     ->title('Survey sudah boleh di isi')
+                //                     ->body($message)
+                //                     ->success() // Gaya notifikasi sukses
+                //                     ->actions([
+                //                         \Filament\Notifications\Actions\Action::make('Isi Survei')
+                //                             ->url($surveyUrl)
+                //                             ->openUrlInNewTab()
+                //                             ->button(),
+                //                     ])
+                //                     ->sendToDatabase($user);
+                //             }
+                //         }
+                //     }),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

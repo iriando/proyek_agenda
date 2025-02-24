@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('deskripsi');
             $table->string('zoomlink');
             $table->datetime('tanggal_pelaksanaan');
-            $table->boolean('status_survey')->default('0');
+            $table->datetime('tanggal_selesai');
+            // $table->boolean('status_survey')->default('0');
             $table->timestamps();
         });
     }

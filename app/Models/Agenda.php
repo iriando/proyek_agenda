@@ -14,7 +14,8 @@ class Agenda extends Model
         'deskripsi',
         'zoomlink',
         'tanggal_pelaksanaan',
-        'status_survey',
+        'tanggal_selesai',
+        // 'status',
     ];
 
     protected $casts = [
@@ -37,5 +38,20 @@ class Agenda extends Model
 
     public function survey(){
         return $this->hasOne(Survey::class);
+    }
+
+    public function getStatusAttribute() //accessornya
+    {
+        $now = Carbon::now('GMT+9')->format('Y-m-d H:i:s'); // Ambil tanggal sekarang dalam format YYYY-MM-DD
+        $startDate = Carbon::parse($this->tanggal_pelaksanaan)->format('Y-m-d H:i:s');
+        $endDate = Carbon::parse($this->tanggal_selesai)->format('Y-m-d H:i:s');
+
+        if ($startDate > $now) {
+            return 'Belum Dimulai';
+        } elseif ($startDate <= $now && $endDate >= $now) {
+            return 'Sedang Berlangsung';
+        } else {
+            return 'Selesai';
+        }
     }
 }
