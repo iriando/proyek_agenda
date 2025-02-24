@@ -84,7 +84,12 @@ class AgendaResource extends Resource
                     ->sortable(),
                 Tables\Columns\ToggleColumn::make('survey.is_active')
                     ->label('Survey')
-                    ->disabled(!Auth::user()->hasrole('admin'))
+                    ->disabled(fn ($record): bool => !Auth::user()->hasRole('admin') || !$record->survey)
+                    ->tooltip(fn ($record): string => $record->survey
+                        ? ($record->survey->is_active
+                            ? 'Survei sedang aktif, peserta dapat mengisi.'
+                            : 'Survei belum aktif, peserta tidak dapat mengisi.')
+                        : 'Pastikan survey telah dibuat terlebih dahulu.')
                     ->updateStateUsing(function ($state, $record) {
                         if ($record->survey) { // Cek apakah agenda memiliki survei
                             $record->survey->update(['is_active' => $state]); // Update ke tabel survey
