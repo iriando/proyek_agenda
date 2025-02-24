@@ -36,11 +36,11 @@ class ViewAgenda extends ViewRecord
             $actions[] = Action::make('Daftar')
                 ->color('warning')
                 ->action(fn () => $this->daftarkanPeserta())
-                ->hidden(fn () => Carbon::now()->greaterThan($this->record->tanggal_pelaksanaan));
+                ->hidden(fn () => $this->record->status === 'Selesai');
         }
 
         // Tampilkan tombol "Isi Survei" jika pengguna sudah terdaftar dan survei tersedia
-        if ($isRegistered && $this->record->survey !== null) {
+        if ($isRegistered && $this->record->survey->is_active == 1) {
             $actions[] = Action::make('isi_survei')
                 ->label('Isi Survei')
                 ->color('success')
