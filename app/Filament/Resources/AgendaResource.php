@@ -82,9 +82,26 @@ class AgendaResource extends Resource
                         'Selesai' => 'success',
                     })
                     ->sortable(),
-                // Tables\Columns\ToggleColumn::make('survey.is_active')
-                //     ->label('Survey')
-                //     ->disabled(!Auth::user()->hasrole('admin')),
+                Tables\Columns\ToggleColumn::make('survey.is_active')
+                    ->label('Survey')
+                    ->disabled(!Auth::user()->hasrole('admin'))
+                    ->updateState(function ($state, $record) {
+                        // Perbarui status survei di database
+                        $record->survey->update(['is_active' => $state]);
+
+                        // Jika survei diaktifkan, kirim notifikasi ke peserta
+                        if ($state) {
+                            $users = $record->survey->agenda->peserta ?? []; // Ambil peserta dari agenda
+
+                            foreach ($users as $user) {
+                                Notification::make()
+                                    ->title('Survei Telah Dibuka')
+                                    ->body("Survei untuk agenda **{$record->name}** telah dibuka. Silakan isi sekarang!")
+                                    ->success()
+                                    ->sendToDatabase($user);
+                            }
+                        }
+                    }),
                 // Tables\Columns\ToggleColumn::make('status_survey')
                 //     ->label('Status Survey')
                 //     ->disabled(!Auth::user()->hasrole('admin'))
