@@ -9,8 +9,10 @@ use App\Models\Agenda;
 use App\Models\Peserta;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use Filament\Resources\Resource;
 use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\Section;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AgendaResource\Pages;
@@ -27,6 +29,11 @@ class AgendaResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
     protected static ?string $navigationLabel = 'Kegiatan';
 
+    public static function getRecordRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public static function shouldRegisterNavigation(): bool
     {
         if (auth()->user()->can('view agenda'))
@@ -39,22 +46,43 @@ class AgendaResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('judul')
-                    ->required()
-                    ->maxLength(191),
-                Forms\Components\TextArea::make('deskripsi'),
-                Forms\Components\TextInput::make('zoomlink')
-                    ->required()
-                    ->maxLength(191),
-                Forms\Components\DateTimePicker::make('tanggal_pelaksanaan')
-                    ->label('waktu dan tanggal pelaksanaan')
-                    ->displayFormat('Y-m-d H:i:s')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('tanggal_selesai')
-                    ->label('waktu dan tanggal selesai')
-                    ->displayFormat('Y-m-d H:i:s')
-                    ->required(),
+                Section::make('Informasi Kegiatan')
+                ->schema([
+                    Forms\Components\TextInput::make('judul')
+                        ->required()
+                        ->maxLength(191)
+                        ->afterStateUpdated(fn ($set, $state) => $set('slug', Str::slug($state))),
+                    Forms\Components\TextInput::make('slug')
+                        ->label('Slug')
+                        ->hidden()
+                        ->required()
+                        ->unique(Agenda::class, 'slug')
+                        ->disabled(),
+                    Forms\Components\TextArea::make('deskripsi'),
+                    Forms\Components\TextInput::make('zoomlink')
+                        ->required()
+                        ->maxLength(191),
+                    Forms\Components\DateTimePicker::make('tanggal_pelaksanaan')
+                        ->label('waktu dan tanggal pelaksanaan')
+                        ->displayFormat('Y-m-d H:i:s')
+                        ->required(),
+                    Forms\Components\DateTimePicker::make('tanggal_selesai')
+                        ->label('waktu dan tanggal selesai')
+                        ->displayFormat('Y-m-d H:i:s')
+                        ->required(),
+                ]),
+                // Section::make('pilih Pemateri')
+                // ->schema([
+                //     Forms\Components\Select::make('pemateri')
+                //     ->multiple()
+                //     ->preload()
+                //     ->searchable()
+                //     ->options(User::query()->role('pemateri')->pluck('name', 'id'))
+                //     ->searchable()
+                //     ->required(),
+                // ]),
             ]);
+
     }
 
     public static function table(Table $table): Table

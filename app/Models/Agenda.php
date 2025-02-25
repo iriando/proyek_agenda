@@ -5,12 +5,14 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class Agenda extends Model
 {
     use HasFactory;
     protected $fillable = [
         'judul',
+        'slug',
         'deskripsi',
         'zoomlink',
         'tanggal_pelaksanaan',
@@ -54,4 +56,27 @@ class Agenda extends Model
             return 'Selesai';
         }
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($agenda) {
+            $agenda->slug = Str::slug($agenda->judul);
+
+            // Pastikan slug unik
+            $originalSlug = $agenda->slug;
+            $counter = 1;
+            while (Agenda::where('slug', $agenda->slug)->exists()) {
+                $agenda->slug = $originalSlug . '-' . $counter;
+                $counter++;
+            }
+        });
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
 }

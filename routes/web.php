@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Models\Agenda;
 use App\Filament\Pages\SubmitSurvey;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,11 @@ Route::post('/notifications/read-all', function () {
 })->name('notifications.read-all');
 
 Route::get('/survey/{survey}', SubmitSurvey::class)->name('filament.pages.submit-survey');
+
+// Route::get('/agenda/{slug}', function ($slug) {
+//     $agenda = Agenda::where('slug', $slug)->firstOrFail();
+//     return view('', compact('agenda'));
+// })->name('agenda.show');
 
 // Route::get('/admin/register', function(){
 
