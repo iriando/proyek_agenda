@@ -17,7 +17,7 @@ class CalendarWidget extends FullCalendarWidget
                 'id' => $agenda->id,
                 'title' => $agenda->judul,
                 'start' => $agenda->tanggal_pelaksanaan,
-                'url' => route('filament.admin.resources.agendas.view', $agenda->id),
+                'url' => route('filament.admin.resources.agendas.view', $agenda->slug),
             ];
         })->toArray();
     }

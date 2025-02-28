@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('agenda_id');
             $table->string('title');
+            $table->string('slug')->unique();
             $table->text('description');
             $table->boolean('is_active');
             $table->timestamps();

@@ -492,6 +492,18 @@ progress {
   font-weight: 300;
 }
 
+.wrap-text {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 200px; /* Sesuaikan tinggi gambar */
+    width: 100%;
+}
+
 .display-1 {
   font-size: calc(1.625rem + 4.5vw);
   font-weight: 300;

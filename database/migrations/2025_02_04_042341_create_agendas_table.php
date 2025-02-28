@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('zoomlink');
             $table->datetime('tanggal_pelaksanaan');
             $table->datetime('tanggal_selesai');
+            $table->string('poster')->nullable();
             // $table->boolean('status_survey')->default('0');
             $table->timestamps();
         });

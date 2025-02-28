@@ -50,7 +50,7 @@ class AgendaResource extends Resource
                 ->schema([
                     Forms\Components\TextInput::make('judul')
                         ->required()
-                        ->maxLength(191)
+                        ->live(debounce: 500)
                         ->afterStateUpdated(fn ($set, $state) => $set('slug', Str::slug($state))),
                     Forms\Components\TextInput::make('slug')
                         ->label('Slug')
@@ -70,6 +70,7 @@ class AgendaResource extends Resource
                         ->label('waktu dan tanggal selesai')
                         ->displayFormat('Y-m-d H:i:s')
                         ->required(),
+                    Forms\Components\FileUpload::make('poster'),
                 ]),
                 // Section::make('pilih Pemateri')
                 // ->schema([
@@ -148,8 +149,6 @@ class AgendaResource extends Resource
                             }
                         }
                     }),
-
-
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

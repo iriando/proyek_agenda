@@ -42,6 +42,12 @@ class SurveyResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(191),
+                Forms\Components\TextInput::make('slug')
+                    ->label('Slug')
+                    ->hidden()
+                    ->required()
+                    ->unique(Survey::class, 'slug')
+                    ->disabled(),
                 Forms\Components\Textarea::make('description')
                     ->required()
                     ->maxLength(65535)

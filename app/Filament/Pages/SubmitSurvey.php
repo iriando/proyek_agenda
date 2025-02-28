@@ -13,17 +13,16 @@ use Filament\Pages\Page;
 class SubmitSurvey extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-
-    // public static function shouldRegisterNavigation(): bool
-    // {
-    //     return Auth::user() && Auth::user()->hasRole('peserta');
-    // }
-
     protected static string $view = 'filament.pages.submit-survey';
 
     public $surveyId;
     public $questions = [];
     public $answers = []; // Jawaban peserta
+
+    public static function getLayout(): string
+    {
+        return 'filament::components.layouts.base'; // Menggunakan layout dasar tanpa sidebar
+    }
 
     public function mount($survey)
     {

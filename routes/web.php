@@ -3,6 +3,8 @@
 use App\Models\Agenda;
 use App\Filament\Pages\SubmitSurvey;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\SurveyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,22 +18,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $agendas = Agenda::orderBy('tanggal_pelaksanaan', 'asc')->get();
+    return view('welcome', compact('agendas'));
 });
 
-Route::post('/notifications/read-all', function () {
-    auth()->user()->unreadNotifications->markAsRead();
+Route::get('/agenda/{slug}', [AgendaController::class, 'show'])->name('agenda.show');
 
-    return response()->json(['message' => 'Semua notifikasi telah dibaca']);
-})->name('notifications.read-all');
+// Route::post('/notifications/read-all', function () {
+//     auth()->user()->unreadNotifications->markAsRead();
 
-Route::get('/survey/{survey}', SubmitSurvey::class)->name('filament.pages.submit-survey');
+//     return response()->json(['message' => 'Semua notifikasi telah dibaca']);
+// })->name('notifications.read-all');
 
-// Route::get('/agenda/{slug}', function ($slug) {
-//     $agenda = Agenda::where('slug', $slug)->firstOrFail();
-//     return view('', compact('agenda'));
-// })->name('agenda.show');
+// Route::get('/survey/{survey}', SubmitSurvey::class)->name('filament.pages.submit-survey');
 
-// Route::get('/admin/register', function(){
+Route::get('/survey/{slug}', [SurveyController::class, 'show'])->name('survey.show');
+Route::post('/survey/{slug}', [SurveyController::class, 'submit'])->name('survey.submit');
 
-// })
+// Route::get('agenda-landing', [AgendaController::class, 'index']);
+// Route::get('/', [AgendaController::class, 'index'])->name('agenda.index');

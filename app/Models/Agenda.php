@@ -17,6 +17,7 @@ class Agenda extends Model
         'zoomlink',
         'tanggal_pelaksanaan',
         'tanggal_selesai',
+        'poster',
         // 'status',
     ];
 
@@ -61,17 +62,32 @@ class Agenda extends Model
     {
         parent::boot();
 
+        // Buat slug saat agenda baru dibuat
         static::creating(function ($agenda) {
-            $agenda->slug = Str::slug($agenda->judul);
+            $agenda->slug = self::generateUniqueSlug($agenda->judul);
+        });
 
-            // Pastikan slug unik
-            $originalSlug = $agenda->slug;
-            $counter = 1;
-            while (Agenda::where('slug', $agenda->slug)->exists()) {
-                $agenda->slug = $originalSlug . '-' . $counter;
-                $counter++;
+        // Perbarui slug jika judul diubah
+        static::updating(function ($agenda) {
+            if ($agenda->isDirty('judul')) {
+                $agenda->slug = self::generateUniqueSlug($agenda->judul);
             }
         });
+    }
+
+    // Fungsi untuk memastikan slug unik
+    protected static function generateUniqueSlug($title)
+    {
+        $slug = Str::slug($title);
+        $originalSlug = $slug;
+        $counter = 1;
+
+        while (Agenda::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+
+        return $slug;
     }
 
     public function getRouteKeyName()
