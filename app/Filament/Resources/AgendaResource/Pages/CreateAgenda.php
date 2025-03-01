@@ -36,6 +36,6 @@ class CreateAgenda extends CreateRecord
                     ->url(route('filament.admin.resources.agendas.view', ['record' => $this->record->id]))
                     ->markAsRead(),
             ])
-            ->sendToDatabase(User::all()); // Kirim ke semua user
+            ->sendToDatabase(User::all());
     }
 }

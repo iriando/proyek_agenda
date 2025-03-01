@@ -25,6 +25,15 @@
                     <div class="col-lg-8 align-self-baseline">
                         {{-- <p class="text-white-75 mb-5">Start Bootstrap can help you build better websites using the Bootstrap framework! Just download a theme and start customizing, no strings attached!</p> --}}
                         {{-- <a class="btn btn-primary btn-xl" href="/admin/register">Segera Daftar</a> --}}
+
+
+                    </div>
+                    <!-- Tombol Scroll ke Agenda -->
+                    <div class="text-center mt-4">
+                        <a href="#agenda" class="btn-lg scroll-to">
+                            <p style="font-size: 1rem; color: white;">Klik!</p>
+                            <i class="bi bi-chevron-down" style="font-size: 4rem; color: white;"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -36,7 +45,7 @@
                 <h2 class="text-center">Agenda Terbaru</h2>
 
                 <div class="row">
-                    @foreach($agendas as $agenda)
+                    @forelse($agendas as $agenda)
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card shadow-sm">
                                 @if($agenda->poster)
@@ -46,30 +55,27 @@
                                             style="width: 180px; height: auto; object-fit: cover;"
                                             alt="{{ $agenda->judul }}">
                                     </div>
-                                @else
-                                    <div class="d-flex justify-content-center mt-3">
-                                        <img src="{{ asset('uploads/agenda/default.jpg') }}"
-                                            class="rounded"
-                                            style="width: 180px; height: auto; object-fit: cover;"
-                                            alt="Default Image">
-                                    </div>
                                 @endif
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $agenda->judul }}</h5>
                                     <p class="card-text">{{ $agenda->deskripsi }}</p>
                                     <p class="text-muted">
                                         <i class="bi bi-calendar-event"></i>
-                                        {{ date('d M Y H:i', strtotime($agenda->tanggal_pelaksanaan)) }}
+                                        {{ date('d M Y', strtotime($agenda->tanggal_pelaksanaan)) }}
                                     </p>
-                                    <p class="wrap-text">
-                                        <a href="{{ route('agenda.show', $agenda->slug) }}" class="btn btn-success btn-sm">
-                                            Details
-                                        </a>
-                                    </p>
+                                    <p class="text-muted">
+                                        <i class="bi bi-clock"></i>
+                                        {{ date('H:i', strtotime($agenda->tanggal_pelaksanaan)) }}
+                                    </p text-center>
+                                    <a href="{{ route('agenda.show', $agenda->slug) }}" class="btn center btn-success btn-sm">
+                                        Details
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <p class="text-center text-muted">Belum ada agenda mendatang.</p>
+                    @endforelse
                 </div>
             </div>
         </section>

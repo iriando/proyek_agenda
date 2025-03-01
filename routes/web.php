@@ -17,10 +17,11 @@ use App\Http\Controllers\SurveyController;
 |
 */
 
-Route::get('/', function () {
-    $agendas = Agenda::orderBy('tanggal_pelaksanaan', 'asc')->get();
-    return view('welcome', compact('agendas'));
-});
+Route::get('/', [AgendaController::class, 'index'])->name('welcome');
+// Route::get('/', function () {
+//     $agendas = Agenda::orderBy('tanggal_pelaksanaan', 'asc')->get();
+//     return view('welcome', compact('agendas'));
+// });
 
 Route::get('/agenda/{slug}', [AgendaController::class, 'show'])->name('agenda.show');
 
