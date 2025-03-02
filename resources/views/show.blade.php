@@ -44,6 +44,7 @@
                         </div>
 
                         <div class="mt-3 d-flex flex-wrap justify-content-center gap-2">
+
                             @if(!empty($agenda->zoomlink))
                                 <a href="{{ $agenda->zoomlink }}" target="_blank" class="btn btn-primary">
                                     <i class="bi bi-camera-video"></i> Join Meeting
@@ -57,6 +58,10 @@
                                     </a>
                                 @endforeach
                             @endif
+
+                            <a href="{{ route('peserta.show', $agenda->slug) }}" class="btn btn-info">
+                                <i class="bi bi-person-check"></i> Daftar Hadir
+                            </a>
 
                             @if(!empty($agenda->survey))
                                 <a href="{{ route('survey.show', $agenda->slug) }}" class="btn btn-warning">

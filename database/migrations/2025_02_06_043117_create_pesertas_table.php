@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('pesertas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreignId('agenda_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             // $table->id();
             // $table->unsignedBigInteger('agenda_id');
-            // $table->string('nip');
-            // $table->string('nama');
+            $table->string('nip');
+            $table->string('nama');
+            $table->string('instansi');
             // $table->timestamps();
             // $table->foreign('agenda_id')->references('id')->on('agendas')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

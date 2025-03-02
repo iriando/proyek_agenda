@@ -29,8 +29,9 @@ class PesertaRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('nama')
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')->label('Nama'),
-                Tables\Columns\TextColumn::make('user.roles.name')
+                Tables\Columns\TextColumn::make('nama')->label('Nama'),
+                Tables\Columns\TextColumn::make('nip'),
+                Tables\Columns\TextColumn::make('instansi'),
             ])
             ->filters([
                 //
@@ -39,8 +40,8 @@ class PesertaRelationManager extends RelationManager
                 // Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                // Tables\Actions\ViewAction::make(),
+                // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

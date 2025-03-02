@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('survey_responses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('survey_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('question_id');
             $table->text('answer');
             $table->timestamps();
