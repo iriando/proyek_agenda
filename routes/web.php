@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\PesertaController;
+// use App\Http\Controllers\Api\AgendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,8 @@ Route::post('/survey/{slug}', [SurveyController::class, 'submit'])->name('survey
 
 Route::get('/daftar-hadir/{slug}', [PesertaController::class, 'show'])->name('peserta.show');
 Route::post('/daftar-hadir/{slug}', [PesertaController::class, 'store'])->name('peserta.store');
+
+// Route::get('agendas/{id}', [AgendaController::class, 'show']);
 
 
 // Route::get('agenda-landing', [AgendaController::class, 'index']);
