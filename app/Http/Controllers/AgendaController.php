@@ -12,12 +12,10 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        $agendas = Agenda::all()->filter(function ($agenda) {
-            return in_array($agenda->status, ['Belum Dimulai', 'Sedang Berlangsung']);
-        });
-        return view('welcome', compact('agendas'));
-        // $agendas = Agenda::orderBy('tanggal_pelaksanaan', 'asc')->get();
-        // return view('agenda.index', compact('agendas'));
+        $agendasBerjalan = Agenda::all()->filter(fn ($agenda) => in_array($agenda->status, ['Belum Dimulai', 'Sedang Berlangsung']));
+        $agendasSelesai = Agenda::all()->filter(fn ($agenda) => $agenda->status === 'Selesai');
+
+        return view('welcome', compact('agendasBerjalan', 'agendasSelesai'));
     }
 
 

@@ -45,10 +45,16 @@
 
                         <div class="mt-3 d-flex flex-wrap justify-content-center gap-2">
 
-                            @if(!empty($agenda->zoomlink))
-                                <a href="{{ $agenda->zoomlink }}" target="_blank" class="btn btn-primary">
-                                    <i class="bi bi-camera-video"></i> Join Meeting
+                            @if($agenda->status !== 'Selesai')
+                                <a href="{{ route('peserta.show', $agenda->slug) }}" class="btn btn-primary">
+                                    <i class="bi bi-person-check"></i> Daftar Hadir
                                 </a>
+
+                                @if(!empty($agenda->zoomlink))
+                                    <a href="{{ $agenda->zoomlink }}" target="_blank" class="btn btn-info">
+                                        <i class="bi bi-camera-video"></i> Join Meeting
+                                    </a>
+                                @endif
                             @endif
 
                             @if($agenda->materi->count() > 0)
@@ -59,28 +65,26 @@
                                 @endforeach
                             @endif
 
-                            <a href="{{ route('peserta.show', $agenda->slug) }}" class="btn btn-info">
-                                <i class="bi bi-person-check"></i> Daftar Hadir
-                            </a>
-
-                            @if(!empty($agenda->survey))
+                            @if($agenda->survey && $agenda->survey->is_active == 1)
                                 <a href="{{ route('survey.show', $agenda->slug) }}" class="btn btn-warning">
                                     <i class="bi bi-clipboard-check"></i> Isi Survey
                                 </a>
                             @endif
                         </div>
 
-                        <div class="mt-4 d-flex flex-wrap gap-2 justify-content-center">
-                            <!-- Share via WhatsApp -->
-                            <a href="https://api.whatsapp.com/send?text={{ urlencode($agenda->judul . ' - ' . url()->current()) }}" target="_blank" class="btn btn-success">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
+                        @if($agenda->status !== 'Selesai')
+                            <div class="mt-4 d-flex flex-wrap gap-2 justify-content-center">
+                                <!-- Share via WhatsApp -->
+                                <a href="https://api.whatsapp.com/send?text={{ urlencode($agenda->judul . ' - ' . url()->current()) }}" target="_blank" class="btn btn-success">
+                                    <i class="bi bi-whatsapp"></i>
+                                </a>
 
-                            <!-- Share via Native API (untuk perangkat yang mendukung) -->
-                            <button id="shareButton" class="btn btn-secondary">
-                                <i class="bi bi-share-fill"></i>
-                            </button>
-                        </div>
+                                <!-- Share via Native API (untuk perangkat yang mendukung) -->
+                                <button id="shareButton" class="btn btn-secondary">
+                                    <i class="bi bi-share-fill"></i>
+                                </button>
+                            </div>
+                        @endif
 
                         <script>
                             document.getElementById('shareButton').addEventListener('click', async () => {
