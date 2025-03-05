@@ -125,7 +125,7 @@ class AgendaResource extends Resource
 
                             if ($state) { // Jika survey diaktifkan, kirim notifikasi
                                 $message = "Survey '{$record->judul}' telah diaktifkan.";
-                                $surveyUrl = route('filament.pages.submit-survey', ['survey' => $record->survey->id]);
+                                // $surveyUrl = route('filament.pages.submit-survey', ['survey' => $record->survey->id]);
 
                                 // Ambil peserta yang terkait dengan agenda ini
                                 $peserta = Peserta::where('agenda_id', $record->id)
