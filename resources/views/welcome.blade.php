@@ -80,7 +80,7 @@
             </div>
 
             <!-- Section Agenda Selesai -->
-            <h2 class="text-center mt-5 mb-4">Agenda Selesai</h2>
+            <h2 class="text-center mt-5 mb-4">History Agenda</h2>
 
             <div class="row">
                 @forelse($agendasSelesai as $agenda)
