@@ -70,7 +70,9 @@ class AgendaResource extends Resource
                         ->label('waktu dan tanggal selesai')
                         ->displayFormat('Y-m-d H:i:s')
                         ->required(),
-                    Forms\Components\FileUpload::make('poster'),
+                    Forms\Components\FileUpload::make('poster')
+                        ->image()
+                        ->reorderable(),
                 ]),
                 // Section::make('pilih Pemateri')
                 // ->schema([

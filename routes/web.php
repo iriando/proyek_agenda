@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\PesertaController;
-use App\Filament\Pages\SurveyReport;
+use App\Filament\Pages\DetailReport;
 
 // use App\Http\Controllers\Api\AgendaController;
 
@@ -44,7 +44,7 @@ Route::get('/daftar-hadir/{slug}', [PesertaController::class, 'show'])->name('pe
 Route::post('/daftar-hadir/{slug}', [PesertaController::class, 'store'])->name('peserta.store');
 
 
-Route::get('/admin/survey-report/{record}', SurveyReport::class)->name('filament.admin.pages.survey-report');
+Route::get('/admin/detail-report/{record}', DetailReport::class)->name('filament.admin.pages.detail-report');
 
 // Route::get('agendas/{id}', [AgendaController::class, 'show']);
 

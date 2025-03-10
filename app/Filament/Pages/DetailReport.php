@@ -8,10 +8,10 @@ use App\Models\Survey;
 use App\Models\Survey_question;
 use Illuminate\Support\Facades\DB;
 
-class SurveyReport extends Page
+class DetailReport extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
-    protected static string $view = 'filament.pages.survey-report';
+    protected static string $view = 'filament.pages.detail-report';
 
     public ?Agenda $agenda = null;
     public $surveyResults = [];
@@ -31,9 +31,14 @@ class SurveyReport extends Page
 
         // Ambil pertanyaan beserta hasil survei berdasarkan survey_id
         $this->surveyResults = Survey_question::where('survey_id', $survey->id)
-            ->with(['answer' => function ($query) {
+            ->with(['response' => function ($query) {
                 $query->select('question_id', 'answer', DB::raw('COUNT(*) as total'))
                     ->groupBy('question_id', 'answer');
             }])->get();
+    }
+
+    public function getTitle(): string
+    {
+        return 'Detail laporan';
     }
 }

@@ -80,7 +80,7 @@ class AdminPanelProvider extends PanelProvider
                     NavigationGroup::make('Agenda kegiatan')
                     ->items([
                         ...AgendaResource::getNavigationItems(),
-                        ...MateriResource::getNavigationItems(),
+                        // ...MateriResource::getNavigationItems(),
                         ...SurveyResource::getNavigationItems(),
                         ...ReportAgenda::getNavigationItems(),
                     ]),

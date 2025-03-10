@@ -65,9 +65,16 @@
                                     <i class="bi bi-clock"></i>
                                     {{ date('H:i', strtotime($agenda->tanggal_pelaksanaan)) }}
                                 </p>
-                                <p>
-                                    <span class="badge bg-warning text-dark">{{ $agenda->status }}</span>
-                                </p>
+                                @if ($agenda->status === 'Belum Dimulai')
+                                    <p>
+                                        <span class="badge bg-primary text-dark">{{ $agenda->status }}</span>
+                                    </p>
+                                @else
+                                    <p>
+                                        <span class="badge bg-info text-dark">{{ $agenda->status }}</span>
+                                    </p>
+                                @endif
+
                                 <a href="{{ route('agenda.show', $agenda->slug) }}" class="btn btn-success btn-sm">
                                     Lihat Detail
                                 </a>
