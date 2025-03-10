@@ -14,10 +14,9 @@ class AgendaController extends Controller
     {
         $agendasBerjalan = Agenda::all()->filter(fn ($agenda) => in_array($agenda->status, ['Belum Dimulai', 'Sedang Berlangsung']));
         $agendasSelesai = Agenda::all()->filter(fn ($agenda) => $agenda->status === 'Selesai');
-
-        return view('welcome', compact('agendasBerjalan', 'agendasSelesai'));
+        $agenda = Agenda::with(['materi', 'pemateri', 'peserta', 'survey'])->orderBy('created_at', 'desc')->take(3)->get();
+        return view('welcome', compact('agendasBerjalan', 'agendasSelesai', 'agenda'));
     }
-
 
     /**
      * Show the form for creating a new resource.

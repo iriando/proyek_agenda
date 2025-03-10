@@ -1,136 +1,177 @@
-    @extends('layouts.app')
 
-    @section('content')
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#">e-Agenda Kanreg XIV BKN</a>
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        {{-- <li class="nav-item"><a class="nav-link" href="/admin">Login</a></li> --}}
-                        {{-- <li class="nav-item"><a class="nav-link" href="/admin/register">Daftar Akun</a></li> --}}
-                    </ul>
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>Webinar Kantor Regional XIV BKN</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+
+        <!-- Favicons -->
+        <link href="bkn/logo_bkn.png" rel="icon">
+        <link href="bkn/logo_bkn.png" rel="apple-touch-icon">
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com" rel="preconnect">
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        <link href="assets_new/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets_new/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+        <link href="assets_new/vendor/aos/aos.css" rel="stylesheet">
+        <link href="assets_new/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+        <link href="assets_new/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+        <!-- Main CSS File -->
+        <link href="assets_new/css/main.css" rel="stylesheet">
+
+        <!-- =======================================================
+        * Template Name: Append
+        * Template URL: https://bootstrapmade.com/append-bootstrap-website-template/
+        * Updated: Aug 07 2024 with Bootstrap v5.3.3
+        * Author: BootstrapMade.com
+        * License: https://bootstrapmade.com/license/
+        ======================================================== -->
+    </head>
+
+    <body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
+
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+
+        </div>
+    </header>
+
+    <main class="main">
+
+        <!-- Hero Section -->
+        <section id="hero" class="hero section dark-background">
+
+            <img src="assets_new/img/hero-bg.jpg" alt="" data-aos="fade-in">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10">
+                        <h2 data-aos="fade-up" data-aos-delay="100">Webinar Kanreg XIV BKN</h2>
+                        <p data-aos="fade-up" data-aos-delay="200">Jelajahi topik terkini, dapatkan wawasan dari para ahli, dan perluas jaringan profesional Anda melalui webinar interaktif kami</p>
+                    </div>
+                    <div class="col-lg-5" data-aos="fade-up" data-aos-delay="300">
+                        <form action="forms/newsletter.php" method="post" class="php-email-form">
+                            <div class="sign-up-form"><input type="email" name="email"><input type="submit" value="Cari"></div>
+
+                        </form>
+                    </div>
                 </div>
             </div>
-        </nav>
-        <!-- Masthead-->
-        {{-- <header class="masthead">
-            <div class="container px-4 px-lg-5 h-100">
-                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
-                    <div class="col-lg-8 align-self-end"> --}}
-                        {{-- <h1 class="text-white font-weight-bold">Your Favorite Place for Free Bootstrap Themes</h1> --}}
-                        {{-- <hr class="divider" />
-                    </div>
-                    <div class="col-lg-8 align-self-baseline"> --}}
-                        {{-- <p class="text-white-75 mb-5">Start Bootstrap can help you build better websites using the Bootstrap framework! Just download a theme and start customizing, no strings attached!</p> --}}
-                        {{-- <a class="btn btn-primary btn-xl" href="/admin/register">Segera Daftar</a> --}}
 
+        </section><!-- /Hero Section -->
 
-                    {{-- </div> --}}
-                    <!-- Tombol Scroll ke Agenda -->
-                    {{-- <div class="text-center mt-4">
-                        <a href="#agenda" class="btn-lg scroll-to">
-                            <p style="font-size: 1rem; color: white;">Klik!</p>
-                            <i class="bi bi-chevron-down" style="font-size: 4rem; color: white;"></i>
-                        </a>
-                    </div>
+        <!-- Recent Posts Section -->
+        <section id="recent-posts" class="recent-posts section">
+
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Webinar Terbaru</h2>
+                <p>Tingkatkan Pengetahuan dan Keterampilan Anda dengan Webinar Eksklusif!</p>
+            </div><!-- End Section Title -->
+
+            <div class="container">
+
+                <div class="row gy-4">
+                    @foreach($agenda as $agenda)
+                        <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+
+                            <article>
+
+                                <div class="post-img">
+                                    <img src="{{ asset('storage/' . $agenda->poster) }}" alt="" class="img-fluid">
+                                </div>
+
+                                <span class="badge
+
+                                @switch($agenda->status)
+                                    @case('Selesai')
+                                    text-bg-danger
+                                    @break
+                                    @case('Belum Dimulai')
+                                    text-bg-success
+                                    @break
+                                    @case('Sedang Berlangsung')
+                                    text-bg-primary
+                                    @break
+                                @endswitch
+
+                                ">{{$agenda->status}}</span>
+
+                                <h2 class="title">
+                                    <a href="{{ route('agenda.show', $agenda->slug) }}">{{$agenda->judul}}</a>
+                                </h2>
+
+                                <div class="d-flex align-items-center">
+                                    <img src="assets_new/img/blog/blog-author-3.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                    <div class="post-meta">
+                                        <p class="post-author">{{$agenda->deskripsi}}</p>
+                                        <p class="post-date">
+                                            <time datetime="2022-01-01">{{ date('d M Y', strtotime($agenda->tanggal_pelaksanaan)) }}</time>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </article>
+                        </div>
+                    @endforeach
+
                 </div>
-            </div>
-        </header> --}}
 
-        <div class="container py-5">
-            <h2 class="text-center mb-4">Agenda terbaru</h2>
-
-            <div class="row">
-                @forelse($agendasBerjalan as $agenda)
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card shadow-sm">
-                            @if($agenda->poster)
-                                <div class="d-flex justify-content-center mt-3">
-                                    <img src="{{ asset('storage/' . $agenda->poster) }}"
-                                        class="rounded"
-                                        style="width: 180px; height: auto; object-fit: cover;"
-                                        alt="{{ $agenda->judul }}">
-                                </div>
-                            @endif
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $agenda->judul }}</h5>
-                                <p class="card-text">{{ $agenda->deskripsi }}</p>
-                                <p class="text-muted">
-                                    <i class="bi bi-calendar-event"></i>
-                                    {{ date('d M Y', strtotime($agenda->tanggal_pelaksanaan)) }}
-                                </p>
-                                <p class="text-muted">
-                                    <i class="bi bi-clock"></i>
-                                    {{ date('H:i', strtotime($agenda->tanggal_pelaksanaan)) }}
-                                </p>
-                                @if ($agenda->status === 'Belum Dimulai')
-                                    <p>
-                                        <span class="badge bg-primary text-dark">{{ $agenda->status }}</span>
-                                    </p>
-                                @else
-                                    <p>
-                                        <span class="badge bg-info text-dark">{{ $agenda->status }}</span>
-                                    </p>
-                                @endif
-
-                                <a href="{{ route('agenda.show', $agenda->slug) }}" class="btn btn-success btn-sm">
-                                    Lihat Detail
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <p class="text-center text-muted">Tidak ada agenda tersedia.</p>
-                @endforelse
             </div>
 
-            <!-- Section Agenda Selesai -->
-            <h2 class="text-center mt-5 mb-4">History Agenda</h2>
+        </section><!-- /Recent Posts Section -->
 
-            <div class="row">
-                @forelse($agendasSelesai as $agenda)
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card shadow-sm">
-                            @if($agenda->poster)
-                                <div class="d-flex justify-content-center mt-3">
-                                    <img src="{{ asset('storage/' . $agenda->poster) }}"
-                                        class="rounded"
-                                        style="width: 180px; height: auto; object-fit: cover;"
-                                        alt="{{ $agenda->judul }}">
-                                </div>
-                            @endif
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $agenda->judul }}</h5>
-                                <p class="card-text">{{ $agenda->deskripsi }}</p>
-                                <p class="text-muted">
-                                    <i class="bi bi-calendar-event"></i>
-                                    {{ date('d M Y', strtotime($agenda->tanggal_pelaksanaan)) }}
-                                </p>
-                                <p class="text-muted">
-                                    <i class="bi bi-clock"></i>
-                                    {{ date('H:i', strtotime($agenda->tanggal_pelaksanaan)) }}
-                                </p>
-                                <p>
-                                    <span class="badge bg-secondary">Selesai</span>
-                                </p>
-                                <a href="{{ route('agenda.show', $agenda->slug) }}" class="btn btn-outline-dark btn-sm">
-                                    Lihat Detail
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <p class="text-center text-muted">Tidak ada agenda yang sudah selesai.</p>
-                @endforelse
+
+    </main>
+
+    <footer id="footer" class="footer position-relative light-background">
+
+
+        <div class="container copyright text-center mt-4">
+            <p>© <span>Copyright</span> <strong class="sitename">Webinar Kanreg XIV</strong> <span>All Rights Reserved</span></p>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you've purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+                Designed by Bidang Informasi Kepegawaian</a>
             </div>
         </div>
 
+    </footer>
 
-        <!-- Footer-->
-        <footer class="bg-light py-5">
-            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2025 - Kanreg XIV BKN</div></div>
-        </footer>
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-    @endsection
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="assets_new/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets_new/vendor/php-email-form/validate.js"></script>
+    <script src="assets_new/vendor/aos/aos.js"></script>
+    <script src="assets_new/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets_new/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets_new/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="assets_new/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets_new/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="assets_new/js/main.js"></script>
+
+    </body>
+
+    </html>
+
