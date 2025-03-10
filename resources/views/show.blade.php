@@ -46,9 +46,11 @@
                         <div class="mt-3 d-flex flex-wrap justify-content-center gap-2">
 
                             @if($agenda->status !== 'Selesai')
-                                <a href="{{ route('peserta.show', $agenda->slug) }}" class="btn btn-primary">
-                                    <i class="bi bi-person-check"></i> Daftar Hadir
-                                </a>
+                                @if ($agenda->status === 'Sedang Berlangsung')
+                                    <a href="{{ route('peserta.show', $agenda->slug) }}" class="btn btn-primary">
+                                        <i class="bi bi-person-check"></i> Daftar Hadir
+                                    </a>
+                                @endif
 
                                 @if(!empty($agenda->zoomlink))
                                     <a href="{{ $agenda->zoomlink }}" target="_blank" class="btn btn-info">

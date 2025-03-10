@@ -48,10 +48,10 @@
         </div>
 
         <div class="text-center">
-            <button type="submit" class="btn btn-primary px-4">Kirim Survey</button>
             <a href="{{ route('agenda.show', $agenda->slug) }}" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Kembali
             </a>
+            <button type="submit" class="btn btn-primary px-4">Kirim Survey</button>
         </div>
     </form>
 </div>

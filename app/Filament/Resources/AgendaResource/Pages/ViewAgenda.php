@@ -16,6 +16,9 @@ class ViewAgenda extends ViewRecord
 
     protected function getHeaderActions(): array
     {
+        return [
+            Actions\EditAction::make(),
+        ];
         $userId = Auth::id();
         $user = Auth::user();
         $agendaId = $this->record->id;
@@ -33,10 +36,10 @@ class ViewAgenda extends ViewRecord
         $actions = [];
         // munculkan tombol daftar kalo belum terdaftar
         if (!$isRegistered) {
-            $actions[] = Action::make('Daftar')
-                ->color('warning')
-                ->action(fn () => $this->daftarkanPeserta())
-                ->hidden(fn () => $this->record->status === 'Selesai');
+            // $actions[] = Action::make('Daftar')
+            //     ->color('warning')
+            //     ->action(fn () => $this->daftarkanPeserta())
+            //     ->hidden(fn () => $this->record->status === 'Selesai');
         }
 
         // Tampilkan tombol "Isi Survei" jika pengguna sudah terdaftar dan survei tersedia

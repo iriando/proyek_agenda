@@ -23,7 +23,7 @@ class Survey_question extends Model
         return $this->belongsTo(Survey::class, 'survey_id', 'id');
     }
 
-    public function answer(){
-        return $this->hasMany(Survey_response::class);
+    public function response(){
+        return $this->hasMany(Survey_response::class, 'question_id', 'id');
     }
 }

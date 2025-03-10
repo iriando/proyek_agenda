@@ -8,11 +8,14 @@ use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Pages\Dashboard;
 use Filament\Support\Colors\Color;
+use App\Filament\Pages\ReportAgenda;
+use App\Filament\Pages\SubmitSurvey;
 use Filament\Navigation\NavigationItem;
 use App\Filament\Resources\UserResource;
 use Filament\Navigation\NavigationGroup;
 use App\Filament\Resources\AgendaResource;
 use App\Filament\Resources\MateriResource;
+use App\Filament\Resources\SurveyResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Navigation\NavigationBuilder;
 use Illuminate\Session\Middleware\StartSession;
@@ -26,8 +29,6 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
-use App\Filament\Pages\SubmitSurvey;
-use App\Filament\Resources\SurveyResource;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -79,8 +80,9 @@ class AdminPanelProvider extends PanelProvider
                     NavigationGroup::make('Agenda kegiatan')
                     ->items([
                         ...AgendaResource::getNavigationItems(),
-                        ...MateriResource::getNavigationItems(),
+                        // ...MateriResource::getNavigationItems(),
                         ...SurveyResource::getNavigationItems(),
+                        ...ReportAgenda::getNavigationItems(),
                     ]),
                     NavigationGroup::make('Pengaturan')
                     ->items([

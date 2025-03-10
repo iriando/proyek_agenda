@@ -50,15 +50,11 @@
         </div>
 
         <div class="text-center">
+            <a href="{{ route('agenda.show', $agenda->slug) }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Kembali
+            </a>
             <button type="submit" class="btn btn-primary px-4">Simpan</button>
         </div>
     </form>
-
-    <!-- Tombol Kembali -->
-    <div class="mt-4 text-center">
-        <a href="{{ route('agenda.show', $agenda->slug) }}" class="btn btn-secondary">
-            <i class="bi bi-arrow-left"></i> Kembali
-        </a>
-    </div>
 </div>
 @endsection
