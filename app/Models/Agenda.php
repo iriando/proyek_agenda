@@ -32,7 +32,7 @@ class Agenda extends Model
     }
 
     public function pemateri(){
-        return $this->hasMany(Pemateri::class, 'agenda_id', 'id');
+        return $this->hasMany(Pemateri::class);
     }
 
     public function peserta(){

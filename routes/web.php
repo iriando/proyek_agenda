@@ -42,11 +42,13 @@ Route::post('/survey/{slug}', [SurveyController::class, 'submit'])->name('survey
 
 Route::get('/daftar-hadir/{slug}', [PesertaController::class, 'show'])->name('peserta.show');
 Route::post('/daftar-hadir/{slug}', [PesertaController::class, 'store'])->name('peserta.store');
+
 Route::get('/tes', function () {
     return view('layouts.app_new');
 });
 // Route::get('agendas/{id}', [AgendaController::class, 'show']);
 
+Route::get('/admin/detail-report/{record}', DetailReport::class)->name('filament.admin.pages.detail-report');
 
 // Route::get('agenda-landing', [AgendaController::class, 'index']);
 // Route::get('/', [AgendaController::class, 'index'])->name('agenda.index');

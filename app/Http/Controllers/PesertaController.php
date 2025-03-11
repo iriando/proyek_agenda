@@ -19,7 +19,7 @@ class PesertaController extends Controller
         $agenda = Agenda::where('slug', $slug)->firstOrFail();
 
         $request->validate([
-            'nip' => 'required|string|max:20|unique:pesertas,nip,NULL,id,agenda_id,' . $agenda->id,
+            'nip' => 'required|string|max:20|unique:pesertas,nip,NULL,id,agenda_id,' . $agenda->slug,
             'nama' => 'required|string|max:255',
         ], [
             'nip.required' => 'NIP wajib diisi.',
