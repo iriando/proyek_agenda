@@ -20,7 +20,7 @@
         <!-- Vendor CSS Files -->
         <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-        <link href="{{ asset('vendor/aos/aos.css" rel="stylesheet') }}">
+        <link href="{{ asset('vendor/aos/aos.css')}}" rel="stylesheet">
         <link href="{{ asset('vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
         <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
@@ -40,6 +40,9 @@
 
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
+            <a href="{{url('/')}}" class="logo d-flex align-items-center me-auto me-xl-0">
+                <h1 class="sitename">Webinar Kanreg XIV BKN</h1>
+            </a>
 
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
 

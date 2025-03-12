@@ -17,7 +17,7 @@
                     </a>
                     @if($agenda->status !== 'Selesai')
                         @if ($agenda->status === 'Sedang Berlangsung')
-                            <a href="{{ route('peserta.show', $agenda->slug) }}" class="active">
+                            <a href="{{ route('peserta.show', $agenda->slug) }}">
                                 <i class="bi bi-person-check"></i><span> Daftar Hadir</span>
                             </a>
                         @endif
@@ -31,7 +31,7 @@
                         @foreach($agenda->materi as $materi)
                             <a href="{{ asset('storage/' . $materi->file) }}" download>
                                 <i class="bi bi-file-earmark-arrow-down"></i><span>Download materi {{ $materi->judul }}</span>
-                            /a>
+                            </a>
                         @endforeach
                     @endif
 

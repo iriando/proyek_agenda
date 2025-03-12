@@ -19,12 +19,13 @@ class PesertaController extends Controller
         $agenda = Agenda::where('slug', $slug)->firstOrFail();
 
         $request->validate([
-            'nip' => 'required|string|max:20|unique:pesertas,nip,NULL,id,agenda_id,' . $agenda->slug,
+            'nip' => 'required|numeric|min_digits:18|max_digits:18|unique:pesertas,nip,NULL,id,agenda_id,' . $agenda->slug,
             'nama' => 'required|string|max:255',
         ], [
             'nip.required' => 'NIP wajib diisi.',
-            'nip.string' => 'NIP harus berupa teks.',
-            'nip.max' => 'NIP tidak boleh lebih dari 20 karakter.',
+            'nip.numeric' => 'NIP harus berupa angka.',
+            'nip.min_digits' => 'NIP tidak boleh kurang dari 18 karakter.',
+            'nip.max_digits' => 'NIP tidak boleh lebih dari 18 karakter.',
             'nip.unique' => 'NIP ini sudah terdaftar untuk agenda ini.',
             'nama.required' => 'Nama lengkap wajib diisi.',
             'nama.string' => 'Nama lengkap harus berupa teks.',

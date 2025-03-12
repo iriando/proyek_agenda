@@ -30,7 +30,7 @@
                         @foreach($agenda->materi as $materi)
                             <a href="{{ asset('storage/' . $materi->file) }}" download>
                                 <i class="bi bi-file-earmark-arrow-down"></i><span>Download materi {{ $materi->judul }}</span>
-                            /a>
+                            </a>
                         @endforeach
                     @endif
 
@@ -63,12 +63,20 @@
             @else
                 <img src="{{ asset('uploads/agenda/default.jpg') }}" class="rounded mb-3 img-fluid" style="max-width: 250px; height: auto; object-fit: cover;" alt="Default Image">
             @endif
-
+\
             <!-- Judul Agenda -->
             <h3 class="fw-bold">{{ $agenda->judul ?? 'Agenda Tidak Ditemukan' }}</h3>
 
             <!-- Deskripsi -->
             <p class="text-muted">{{ $agenda->deskripsi ?? 'Tidak ada deskripsi tersedia.' }}</p>
+
+            <!-- Pemateri -->
+            {{-- @foreach($agenda->pemateri as $pemateri) --}}
+                <div class="text-muted mb-3 d-flex">
+                    <i class="bi bi-person me-2"></i>
+                        <span>{{ $agenda->pemateri->first()->user->name ?? 'Tidak ada pemateri' }}</span>
+                </div>
+            {{-- @endforeach --}}
 
             <!-- Tanggal Pelaksanaan -->
             <div class="text-muted mb-3 d-flex">
