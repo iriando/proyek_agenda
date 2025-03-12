@@ -55,15 +55,31 @@
                     </button>
                 </div>
             </div><!-- End Services List -->
+
+            <div class="widgets-container" style="margin-top: 30px;">
+                <!-- Recent Posts Widget -->
+                <div class="recent-posts-widget widget-item">
+                    <h4 class="widget-title">Baru ditambahkan</h3>
+                    @foreach ($agendaBaru as $new)
+                        <div class="post-item">
+                            <img src="{{ asset('storage/' . $new->poster) }}" alt="" class="flex-shrink-0">
+                            <div>
+                            <h4><a href="{{ route('agenda.show', $new->slug) }}">{{$new->judul}}</a></h4>
+                            <time>{{ date('d M Y H:i', strtotime($new->tanggal_pelaksanaan)) }}</time>
+                            </div>
+                        </div><!-- End recent post item-->
+                    @endforeach
+                </div><!--/Recent Posts Widget -->
+            </div>
         </div>
 
         <div class="col-lg-8 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
             @if(!empty($agenda->poster) && file_exists(public_path('storage/' . $agenda->poster)))
-                <img src="{{ asset('storage/' . $agenda->poster) }}" class="rounded mb-3 img-fluid" style="max-width: 250px; height: auto; object-fit: cover;" alt="{{ $agenda->judul }}">
+                <img src="{{ asset('storage/' . $agenda->poster) }}" class="img-fluid services-img" alt="{{ $agenda->judul }}">
             @else
-                <img src="{{ asset('uploads/agenda/default.jpg') }}" class="rounded mb-3 img-fluid" style="max-width: 250px; height: auto; object-fit: cover;" alt="Default Image">
+                <img src="{{ asset('uploads/agenda/default.jpg') }}" class="img-fluid services-img" alt="Default Image">
             @endif
-\
+
             <!-- Judul Agenda -->
             <h3 class="fw-bold">{{ $agenda->judul ?? 'Agenda Tidak Ditemukan' }}</h3>
 

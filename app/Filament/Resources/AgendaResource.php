@@ -50,7 +50,7 @@ class AgendaResource extends Resource
                 ->schema([
                     Forms\Components\TextInput::make('judul')
                         ->required()
-                        ->live(debounce: 500)
+                        // ->live(debounce: 500)
                         ->afterStateUpdated(fn ($set, $state) => $set('slug', Str::slug($state))),
                     Forms\Components\TextInput::make('slug')
                         ->label('Slug')

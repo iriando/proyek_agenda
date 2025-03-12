@@ -22,10 +22,10 @@ class DatabaseSeeder extends Seeder
         $pesertaRole = Role::firstOrCreate(['name' => 'peserta', 'guard_name' => 'web']);
 
         $userAdmin = User::create([
-            'name' => 'taufik',
+            'name' => 'admin',
             'nip' => '199308012022031001',
             'email' => 'taufik.iriando@gmail.com',
-            'password' => bcrypt('taufik112166'),
+            'password' => bcrypt('admin123'),
         ]);
 
         $pemateri = User::create([

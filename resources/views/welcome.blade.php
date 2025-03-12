@@ -80,7 +80,7 @@
                                     <div class="post-meta">
                                         <p class="post-author">{{$agenda->deskripsi}}</p>
                                         <p class="post-date">
-                                            <time datetime="2022-01-01">{{ date('d M Y H:i', strtotime($agenda->tanggal_pelaksanaan)) }}</time>
+                                            <time>{{ date('d M Y H:i', strtotime($agenda->tanggal_pelaksanaan)) }}</time>
                                         </p>
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@
             <div class="container">
 
                 <div class="row gy-4">
-                    @foreach($agendasSelesai as $agenda)
+                    @forelse($agendasSelesai as $agenda)
                         <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
 
                             <article>
@@ -121,9 +121,7 @@
                                 @endif
 
                                 <h2 class="title">
-
                                     <a href="{{ route('agenda.show', $agenda->slug) }}">{{$agenda->judul}}</a>
-
                                 </h2>
 
 
@@ -139,7 +137,9 @@
 
                             </article>
                         </div>
-                    @endforeach
+                    @empty
+                        <p class="text-center text-muted">Belum ada agenda yang dibuat.</p>
+                    @endforelse
 
                 </div>
 
