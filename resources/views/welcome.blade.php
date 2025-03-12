@@ -76,7 +76,7 @@
 
 
                                 <div class="d-flex align-items-center">
-                                    <img src="img/blog/blog-author-3.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                    <img src="bkn/logo_bkn.png" alt="" class="img-fluid post-author-img flex-shrink-0">
                                     <div class="post-meta">
                                         <p class="post-author">{{$agenda->deskripsi}}</p>
                                         <p class="post-date">
@@ -128,7 +128,7 @@
 
 
                                 <div class="d-flex align-items-center">
-                                    <img src="img/blog/blog-author-3.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                    <img src="bkn/logo_bkn.png" alt="" class="img-fluid post-author-img flex-shrink-0">
                                     <div class="post-meta">
                                         <p class="post-author">{{$agenda->deskripsi}}</p>
                                         <p class="post-date">
