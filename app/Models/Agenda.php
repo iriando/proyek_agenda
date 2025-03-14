@@ -14,6 +14,7 @@ class Agenda extends Model
         'judul',
         'slug',
         'deskripsi',
+        'slidolink',
         'zoomlink',
         'tanggal_pelaksanaan',
         'tanggal_selesai',

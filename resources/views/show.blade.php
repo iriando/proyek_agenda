@@ -14,14 +14,26 @@
                     <a href="{{ route('agenda.show', $agenda->slug) }}" class="active">
                         <i class="bi bi-ticket-detailed"></i><span> Detail Webinar</span>
                     </a>
+
+                    @php
+                        use Carbon\Carbon;
+                        $now = Carbon::now();
+                        $tanggalSelesai = Carbon::parse($agenda->tanggal_selesai);
+                        $isThirtyMinutesBefore = $now->greaterThanOrEqualTo($tanggalSelesai->subMinutes(30));
+                    @endphp
+
                     @if($agenda->status !== 'Selesai')
-                        @if ($agenda->status === 'Sedang Berlangsung')
+                        @if ($agenda->status === 'Sedang Berlangsung' && $isThirtyMinutesBefore)
                             <a href="{{ route('peserta.show', $agenda->slug) }}">
                                 <i class="bi bi-person-check"></i><span> Daftar Hadir</span>
                             </a>
                         @endif
                         @if(!empty($agenda->zoomlink)) <a href="{{ $agenda->zoomlink }}" target="_blank">
                             <i class="bi bi-camera-video"></i><span> Link Zoom Meeting</span>
+                        </a>
+                        @endif
+                        @if(!empty($agenda->slidolink)) <a href="{{ route('slido.show', $agenda->slug) }}">
+                            <i class="bi bi-question-circle"></i><span> Link Slido Pertanyaan</span>
                         </a>
                         @endif
                     @endif

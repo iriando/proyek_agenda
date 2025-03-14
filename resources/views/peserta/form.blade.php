@@ -25,6 +25,10 @@
                             <i class="bi bi-camera-video"></i><span> Link Zoom Meeting</span>
                         </a>
                         @endif
+                        @if(!empty($agenda->slidolink)) <a href="{{ route('slido.show', $agenda->slug) }}">
+                            <i class="bi bi-question-circle"></i><span>Slido Pertanyaan</span>
+                        </a>
+                        @endif
                     @endif
 
                     @if($agenda->materi->count() > 0)

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Isi Survey')
+@section('title', 'Slido')
 
 @section('content')
 
@@ -25,7 +25,7 @@
                             <i class="bi bi-camera-video"></i><span> Link Zoom Meeting</span>
                         </a>
                         @endif
-                        @if(!empty($agenda->slidolink)) <a href="{{ route('slido.show', $agenda->slug) }}">
+                        @if(!empty($agenda->slidolink)) <a href="{{ route('slido.show', $agenda->slug) }}"  class="active">
                             <i class="bi bi-question-circle"></i><span>Slido Pertanyaan</span>
                         </a>
                         @endif
@@ -40,7 +40,7 @@
                     @endif
 
                     @if($agenda->survey && $agenda->survey->is_active == 1)
-                        <a href="{{ route('survey.show', $agenda->slug) }}" class="active">
+                        <a href="{{ route('survey.show', $agenda->slug) }}">
                             <i class="bi bi-clipboard-check"></i><span> Survey</span>
                         </a>
                     @endif
@@ -64,55 +64,11 @@
 
         <div class="col-lg-8 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
 
-            <form action="{{ route('survey.submit', $agenda->slug) }}" method="POST">
-                @csrf
-            <h4 class="text-center">Survey untuk {{ $agenda->judul }}</h4>
-            @if(session('success'))
-                <div class="alert alert-success text-center">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            <div class="mb-3">
-                @foreach($agenda->survey->question as $question)
-                    <div class="mb-4">
-                        <label class="form-label fw-bold">{{ $question->question }} @if($question->required) <span class="text-danger">*</span> @endif</label>
-
-                        @if($question->type === 'text')
-                            <textarea name="answers[{{ $question->id }}]" class="form-control" rows="4" required></textarea>
-
-                        @elseif($question->type === 'multiple_choice')
-                            @php
-                                $options = is_array($question->options) ? $question->options : json_decode($question->options, true);
-                            @endphp
-                            <select name="answers[{{ $question->id }}]" class="form-select" required>
-                                <option value="" selected disabled>Pilih jawaban</option>
-                                @foreach($options as $option)
-                                    <option value="{{ $option }}">{{ $option }}</option>
-                                @endforeach
-                            </select>
-
-                        @elseif($question->type === 'rating')
-                            <select name="answers[{{ $question->id }}]" class="form-select" required>
-                                <option value="" selected disabled>Pilih rating</option>
-                                <option value="1">⭐</option>
-                                <option value="2">⭐⭐</option>
-                                <option value="3">⭐⭐⭐</option>
-                                <option value="4">⭐⭐⭐⭐</option>
-                                <option value="5">⭐⭐⭐⭐⭐</option>
-                            </select>
-                        @endif
-                    </div>
-                @endforeach
-            </div>
-
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary px-4">Kirim Survey</button>
-            </div>
-            </form>
+            <iframe src="{{ $agenda->slidolink }}" height="100%" width="100%" frameBorder="0" style="min-height: 560px;" allow="clipboard-write" title="Slido"></iframe>
 
         </div>
     </div>
 </section><!-- /Service Details Section -->
+
 
 @endsection

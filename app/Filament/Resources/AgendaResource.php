@@ -62,6 +62,9 @@ class AgendaResource extends Resource
                     Forms\Components\TextInput::make('zoomlink')
                         ->required()
                         ->maxLength(191),
+                    Forms\Components\TextInput::make('slidolink')
+                        ->required()
+                        ->maxLength(191),
                     Forms\Components\DateTimePicker::make('tanggal_pelaksanaan')
                         ->label('waktu dan tanggal pelaksanaan')
                         ->displayFormat('Y-m-d H:i:s')
