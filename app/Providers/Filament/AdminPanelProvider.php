@@ -40,7 +40,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->brandName('E-Agenda')
             ->login()
-            ->registration()
+            // ->registration()
             ->colors([
                 'primary' => Color::Blue,
             ])
