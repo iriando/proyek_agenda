@@ -19,7 +19,8 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.5",
         "mews/captcha": "^3.4",
-        "saade/filament-fullcalendar": "^3.0",
+        "pxlrbt/filament-excel": "^2.4",
+        "saade/filament-fullcalendar": "3.0",
         "spatie/laravel-permission": "^6.13",
         "tymon/jwt-auth": "^2.2"
     },
