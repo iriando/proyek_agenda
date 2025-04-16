@@ -44,6 +44,11 @@
                             <i class="bi bi-clipboard-check"></i><span> Survey</span>
                         </a>
                     @endif
+
+                    @if(!empty($agenda->linksertifikat)) <a href="{{ $agenda->linksertifikat }}" target="_blank">
+                        <i class="bi bi-camera-video"></i><span> Link Sertifikat</span>
+                    </a>
+                    @endif
                 </div>
             </div><!-- End Services List -->
 

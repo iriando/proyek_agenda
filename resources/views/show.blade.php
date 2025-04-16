@@ -54,7 +54,7 @@
                     @endif
 
                     @if(!empty($agenda->linksertifikat)) <a href="{{ $agenda->linksertifikat }}" target="_blank">
-                        <i class="bi bi-camera-video"></i><span> Link Sertifikat</span>
+                        <i class="bi bi-paperclip"></i><span> Link Sertifikat</span>
                     </a>
                     @endif
                 </div>
