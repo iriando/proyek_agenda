@@ -50,7 +50,7 @@
 
                                 @if($agenda->poster)
                                 <div class="post-img">
-                                    <img src="{{ asset('storage/' . $agenda->poster) }}" alt="" class="img-fluid">
+                                    <img src="uploads/{{$agenda->poster}}" alt="" class="img-fluid">
                                     </div>
                                 @endif
                                 <span class="badge
@@ -117,7 +117,7 @@
 
                                 @if($agenda->poster)
                                 <div class="post-img">
-                                    <img src="{{ asset('storage/' . $agenda->poster) }}" alt="" class="img-fluid">
+                                    <img src="uploads/{{$agenda->poster}}" alt="" class="img-fluid">
                                     </div>
                                 @endif
 

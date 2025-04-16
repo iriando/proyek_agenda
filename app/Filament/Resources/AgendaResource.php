@@ -74,8 +74,20 @@ class AgendaResource extends Resource
                         ->displayFormat('Y-m-d H:i:s')
                         ->required(),
                     Forms\Components\FileUpload::make('poster')
+                        ->disk('public')
+                        ->directory('poster')
                         ->image()
                         ->reorderable(),
+                    Forms\Components\FileUpload::make('certificate_template')
+                        ->label('Template Sertifikat (Word .docx)')
+                        ->disk('public')
+                        ->directory('certificates')
+                        ->acceptedFileTypes(['application/vnd.openxmlformats-officedocument.wordprocessingml.document'])
+                        ->preserveFilenames()
+                        ->downloadable(),
+                    Forms\Components\TextInput::make('linksertifikat')
+                        ->required()
+                        ->maxLength(191),
                 ]),
                 // Section::make('pilih Pemateri')
                 // ->schema([

@@ -39,7 +39,9 @@ class MateriResource extends Resource
                     ->required()
                     ->maxLength(191),
                 Forms\Components\FileUpload::make('file')
-                ->downloadable(),
+                    ->disk('public')
+                    ->directory('materi')
+                    ->downloadable(),
             ]);
     }
 

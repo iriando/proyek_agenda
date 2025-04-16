@@ -14,6 +14,7 @@ class Peserta extends Model
         'nip',
         'nama',
         'instansi',
+        'jabatan',
     ];
 
     public function agenda(){

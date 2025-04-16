@@ -18,12 +18,13 @@
                     @php
                         use Carbon\Carbon;
                         $now = Carbon::now();
-                        $tanggalSelesai = Carbon::parse($agenda->tanggal_selesai);
-                        $isThirtyMinutesBefore = $now->greaterThanOrEqualTo($tanggalSelesai->subMinutes(30));
+                        $tanggalMulai = Carbon::parse($agenda->tanggal_pelaksanaan);
+                        $isThirtyMinutesAfterStart = $now->greaterThanOrEqualTo($tanggalMulai->addMinutes(30));
                     @endphp
 
+
                     @if($agenda->status !== 'Selesai')
-                        @if ($agenda->status === 'Sedang Berlangsung' && $isThirtyMinutesBefore)
+                        @if ($agenda->status === 'Sedang Berlangsung' && $isThirtyMinutesAfterStart)
                             <a href="{{ route('peserta.show', $agenda->slug) }}">
                                 <i class="bi bi-person-check"></i><span> Daftar Hadir</span>
                             </a>
@@ -40,7 +41,7 @@
 
                     @if($agenda->materi->count() > 0)
                         @foreach($agenda->materi as $materi)
-                            <a href="{{ asset('storage/' . $materi->file) }}" download>
+                            <a href="../uploads/{{$materi->file }}" download>
                                 <i class="bi bi-file-earmark-arrow-down"></i><span>Download materi {{ $materi->judul }}</span>
                             </a>
                         @endforeach
@@ -50,6 +51,11 @@
                         <a href="{{ route('survey.show', $agenda->slug) }}">
                             <i class="bi bi-clipboard-check"></i><span> Survey</span>
                         </a>
+                    @endif
+
+                    @if(!empty($agenda->linksertifikat)) <a href="{{ $agenda->linksertifikat }}" target="_blank">
+                        <i class="bi bi-camera-video"></i><span> Link Sertifikat</span>
+                    </a>
                     @endif
                 </div>
             </div><!-- End Services List -->
@@ -74,7 +80,7 @@
                     <h4 class="widget-title">Baru ditambahkan</h3>
                     @foreach ($agendaBaru as $new)
                         <div class="post-item">
-                            <img src="{{ asset('storage/' . $new->poster) }}" alt="" class="flex-shrink-0">
+                            <img src="{{ asset('uploads/' . $new->poster) }}" alt="" class="flex-shrink-0">
                             <div>
                             <h4><a href="{{ route('agenda.show', $new->slug) }}">{{$new->judul}}</a></h4>
                             <time>{{ date('d M Y H:i', strtotime($new->tanggal_pelaksanaan)) }}</time>
@@ -86,10 +92,10 @@
         </div>
 
         <div class="col-lg-8 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
-            @if(!empty($agenda->poster) && file_exists(public_path('storage/' . $agenda->poster)))
-                <img src="{{ asset('storage/' . $agenda->poster) }}" class="img-fluid services-img" alt="{{ $agenda->judul }}">
+            @if(!empty($agenda->poster) && file_exists(public_path('uploads/' . $agenda->poster)))
+                <img src="{{ asset('uploads/' . $agenda->poster) }}" class="img-fluid services-img" alt="{{ $agenda->judul }}">
             @else
-                <img src="{{ asset('uploads/agenda/default.jpg') }}" class="img-fluid services-img" alt="Default Image">
+                <img src="{{ asset('uploads/default.jpg') }}" class="img-fluid services-img" alt="Default Image">
             @endif
 
             <!-- Judul Agenda -->

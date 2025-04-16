@@ -33,7 +33,7 @@
 
                     @if($agenda->materi->count() > 0)
                         @foreach($agenda->materi as $materi)
-                            <a href="{{ asset('storage/' . $materi->file) }}" download>
+                            <a href="../uploads/{{$materi->file }}" download>
                                 <i class="bi bi-file-earmark-arrow-down"></i><span>Download materi {{ $materi->judul }}</span>
                             </a>
                         @endforeach

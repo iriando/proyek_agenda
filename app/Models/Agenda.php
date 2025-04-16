@@ -19,6 +19,8 @@ class Agenda extends Model
         'tanggal_pelaksanaan',
         'tanggal_selesai',
         'poster',
+        'certificate_template',
+        'linksertifikat',
         // 'status',
     ];
 

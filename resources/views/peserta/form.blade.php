@@ -33,7 +33,7 @@
 
                     @if($agenda->materi->count() > 0)
                         @foreach($agenda->materi as $materi)
-                            <a href="{{ asset('storage/' . $materi->file) }}" download>
+                            <a href="../uploads/{{$materi->file }}" download>
                                 <i class="bi bi-file-earmark-arrow-down"></i><span>Download materi {{ $materi->judul }}</span>
                             </a>
                         @endforeach
@@ -64,52 +64,63 @@
 
         <div class="col-lg-8 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
 
-            <form action="{{ route('peserta.store', $agenda->slug) }}" method="POST">
-                @csrf
-            <h4 class="text-center">Daftar Hadir untuk {{ $agenda->judul }}</h4>
+            @php
+                $nipSession = session('nip_terdaftar');
+                $sudahTerdaftar = false;
+
+                if ($nipSession) {
+                    $sudahTerdaftar = $agenda->peserta->where('nip', $nipSession)->isNotEmpty();
+                }
+            @endphp
+
+            @if (!$sudahTerdaftar)
+                <form action="{{ route('peserta.store', $agenda->slug) }}" method="POST">
+                    @csrf
+                <h4 class="text-center">Daftar Hadir untuk {{ $agenda->judul }}</h4>
+                <div class="mb-3">
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">NIP</label>
+                        <input type="text" name="nip" class="form-control @error('nip') is-invalid @enderror" value="{{ old('nip') }}" required>
+                        @error('nip')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+
+                        <label class="form-label fw-bold">Nama Lengkap</label>
+                        <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}" required>
+                        @error('nama')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+
+                        <label class="form-label fw-bold">Jabatan</label>
+                        <input type="text" name="jabatan" class="form-control @error('nama') is-invalid @enderror" value="{{ old('jabatan') }}" required>
+                        @error('jabatan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+
+                        <label class="form-label fw-bold">Instansi</label>
+                        <input type="text" name="instansi" class="form-control @error('nama') is-invalid @enderror" value="{{ old('instansi') }}" required>
+                        @error('instansi')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary px-4">Simpan</button>
+                </div>
+                </form>
+            @else
+                <div class="alert alert-info text-center mt-4">
+                    Anda sudah mengisi daftar hadir. Terima kasih 🙏
+                </div>
+            @endif
 
             @if(session('success'))
-                <div class="alert alert-success text-center">
+                <div class="alert alert-success mt-3">
                     {{ session('success') }}
                 </div>
             @endif
-
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-
-            <div class="mb-3">
-                <div class="mb-4">
-                    <label class="form-label fw-bold">NIP</label>
-                    <input type="text" name="nip" class="form-control @error('nip') is-invalid @enderror" value="{{ old('nip') }}" required>
-                    @error('nip')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-
-                    <label class="form-label fw-bold">Nama Lengkap</label>
-                    <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}" required>
-                    @error('nama')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-
-                    <label class="form-label fw-bold">Instansi</label>
-                    <input type="text" name="instansi" class="form-control @error('nama') is-invalid @enderror" value="{{ old('instansi') }}" required>
-                    @error('instansi')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary px-4">Simpan</button>
-            </div>
-            </form>
 
         </div>
     </div>
