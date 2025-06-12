@@ -15,6 +15,8 @@ class Peserta extends Model
         'nama',
         'instansi',
         'jabatan',
+        'no_hp',
+        'email',
     ];
 
     public function agenda(){

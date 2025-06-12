@@ -12,11 +12,20 @@
             <div class="service-box">
                 <h4>Daftar layanan</h4>
                 <div class="services-list">
-                    <a href="{{ route('agenda.show', $agenda->slug) }}">
+                    <a href="{{ route('agenda.show', $agenda->slug) }}" class="active">
                         <i class="bi bi-ticket-detailed"></i><span> Detail Webinar</span>
                     </a>
+
+                    @php
+                        use Carbon\Carbon;
+                        $now = Carbon::now();
+                        $tanggalMulai = Carbon::parse($agenda->tanggal_pelaksanaan);
+                        $isThirtyMinutesAfterStart = $now->greaterThanOrEqualTo($tanggalMulai->addMinutes(30));
+                    @endphp
+
+
                     @if($agenda->status !== 'Selesai')
-                        @if ($agenda->status === 'Sedang Berlangsung')
+                        @if ($agenda->status === 'Sedang Berlangsung' && $isThirtyMinutesAfterStart)
                             <a href="{{ route('peserta.show', $agenda->slug) }}">
                                 <i class="bi bi-person-check"></i><span> Daftar Hadir</span>
                             </a>
@@ -26,23 +35,32 @@
                         </a>
                         @endif
                         @if(!empty($agenda->slidolink)) <a href="{{ route('slido.show', $agenda->slug) }}">
-                            <i class="bi bi-question-circle"></i><span>Slido Pertanyaan</span>
+                            <i class="bi bi-question-circle"></i><span> Link Slido Pertanyaan</span>
                         </a>
                         @endif
                     @endif
 
                     @if($agenda->materi->count() > 0)
                         @foreach($agenda->materi as $materi)
-                            <a href="{{ asset('storage/' . $materi->file) }}" download>
+                            <a href="../uploads/{{$materi->file }}" download>
                                 <i class="bi bi-file-earmark-arrow-down"></i><span>Download materi {{ $materi->judul }}</span>
                             </a>
                         @endforeach
                     @endif
 
-                    @if($agenda->survey && $agenda->survey->is_active == 1)
-                        <a href="{{ route('survey.show', $agenda->slug) }}" class="active">
-                            <i class="bi bi-clipboard-check"></i><span> Survey</span>
-                        </a>
+                    @if($agenda->surveys->count() > 0)
+                        @foreach ($agenda->surveys as $survey)
+                            @if ($survey->is_active == 1)
+                                <a href="{{ route('survey.show', ['slug' => $agenda->slug, 'survey' => $survey->slug]) }}">
+                                    <i class="bi bi-clipboard-check"></i><span> {{ $survey->title }}</span>
+                                </a>
+                            @endif
+                        @endforeach
+                    @endif
+
+                    @if(!empty($agenda->linksertifikat)) <a href="{{ $agenda->linksertifikat }}" target="_blank">
+                        <i class="bi bi-paperclip"></i><span> Link Sertifikat</span>
+                    </a>
                     @endif
                 </div>
             </div><!-- End Services List -->
@@ -64,9 +82,9 @@
 
         <div class="col-lg-8 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
 
-            <form action="{{ route('survey.submit', $agenda->slug) }}" method="POST">
+            <form action="{{ route('survey.submit', [$agenda->slug, $survey->slug]) }}" method="POST">
                 @csrf
-            <h4 class="text-center">Survey untuk {{ $agenda->judul }}</h4>
+            <h4 class="text-center"> {{ $survey->title }} untuk {{ $agenda->judul }}</h4>
             @if(session('success'))
                 <div class="alert alert-success text-center">
                     {{ session('success') }}
@@ -74,7 +92,7 @@
             @endif
 
             <div class="mb-3">
-                @foreach($agenda->survey->question as $question)
+                @foreach($survey->question as $question)
                     <div class="mb-4">
                         <label class="form-label fw-bold">{{ $question->question }} @if($question->required) <span class="text-danger">*</span> @endif</label>
 

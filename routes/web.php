@@ -35,9 +35,8 @@ Route::get('/slido/{slug}', [SlidoController::class, 'show'])->name('slido.show'
 
 // Route::get('/survey/{survey}', SubmitSurvey::class)->name('filament.pages.submit-survey');
 
-Route::get('/survey/{slug}', [SurveyController::class, 'show'])->name('survey.show');
-
-Route::post('/survey/{slug}', [SurveyController::class, 'submit'])->name('survey.submit');
+Route::get('/survey/{slug}/{survey}', [SurveyController::class, 'show'])->name('survey.show');
+Route::post('/survey/{slug}/{survey}', [SurveyController::class, 'submit'])->name('survey.submit');
 
 Route::get('/daftar-hadir/{slug}', [PesertaController::class, 'show'])->name('peserta.show');
 Route::post('/daftar-hadir/{slug}', [PesertaController::class, 'store'])->name('peserta.store');

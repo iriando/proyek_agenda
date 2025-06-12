@@ -10,11 +10,12 @@ use App\Models\Survey_response;
 
 class SurveyController extends Controller
 {
-    public function show($slug)
+    public function show($slug, $surveySlug)
     {
-        $agenda = Agenda::where('slug', $slug)->with('survey.question')->firstOrFail();
+        $agenda = Agenda::where('slug', $slug)->firstOrFail();
+        $survey = $agenda->surveys()->where('slug', $surveySlug)->with('question')->firstOrFail();
 
-        return view('survey.form', compact('agenda'));
+        return view('survey.form', compact('agenda', 'survey'));
     }
 
     public function submit(Request $request, $slug)

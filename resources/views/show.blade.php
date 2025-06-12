@@ -47,10 +47,14 @@
                         @endforeach
                     @endif
 
-                    @if($agenda->survey && $agenda->survey->is_active == 1)
-                        <a href="{{ route('survey.show', $agenda->slug) }}">
-                            <i class="bi bi-clipboard-check"></i><span> Survey</span>
-                        </a>
+                    @if($agenda->surveys->count() > 0)
+                        @foreach ($agenda->surveys as $survey)
+                            @if ($survey->is_active == 1)
+                                <a href="{{ route('survey.show', ['slug' => $agenda->slug, 'survey' => $survey->slug]) }}">
+                                    <i class="bi bi-clipboard-check"></i><span> {{ $survey->title }}</span>
+                                </a>
+                            @endif
+                        @endforeach
                     @endif
 
                     @if(!empty($agenda->linksertifikat)) <a href="{{ $agenda->linksertifikat }}" target="_blank">

@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('nip');
             $table->string('nama');
             $table->string('instansi');
+            $table->string('jabatan');
+            $table->string('no_hp');
+            $table->string('email');
             // $table->timestamps();
             // $table->foreign('agenda_id')->references('id')->on('agendas')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

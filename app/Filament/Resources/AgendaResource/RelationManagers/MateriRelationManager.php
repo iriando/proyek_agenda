@@ -31,7 +31,7 @@ class MateriRelationManager extends RelationManager
             ->recordTitleAttribute('nama_file')
             ->columns([
                 Tables\Columns\TextColumn::make('nama_file'),
-                Tables\Columns\imageColumn::make('file'),
+                // Tables\Columns\imageColumn::make('file'),
             ])
             ->filters([
                 //

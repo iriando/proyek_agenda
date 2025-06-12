@@ -42,8 +42,8 @@ class Agenda extends Model
         return $this->hasMany(Peserta::class);
     }
 
-    public function survey(){
-        return $this->hasOne(Survey::class);
+    public function surveys(){
+        return $this->hasmany(Survey::class);
     }
 
     public function getStatusAttribute() //accessornya

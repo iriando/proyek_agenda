@@ -12,11 +12,20 @@
             <div class="service-box">
                 <h4>Daftar layanan</h4>
                 <div class="services-list">
-                    <a href="{{ route('agenda.show', $agenda->slug) }}">
+                    <a href="{{ route('agenda.show', $agenda->slug) }}" class="active">
                         <i class="bi bi-ticket-detailed"></i><span> Detail Webinar</span>
                     </a>
+
+                    @php
+                        use Carbon\Carbon;
+                        $now = Carbon::now();
+                        $tanggalMulai = Carbon::parse($agenda->tanggal_pelaksanaan);
+                        $isThirtyMinutesAfterStart = $now->greaterThanOrEqualTo($tanggalMulai->addMinutes(30));
+                    @endphp
+
+
                     @if($agenda->status !== 'Selesai')
-                        @if ($agenda->status === 'Sedang Berlangsung')
+                        @if ($agenda->status === 'Sedang Berlangsung' && $isThirtyMinutesAfterStart)
                             <a href="{{ route('peserta.show', $agenda->slug) }}">
                                 <i class="bi bi-person-check"></i><span> Daftar Hadir</span>
                             </a>
@@ -25,8 +34,8 @@
                             <i class="bi bi-camera-video"></i><span> Link Zoom Meeting</span>
                         </a>
                         @endif
-                        @if(!empty($agenda->slidolink)) <a href="{{ route('slido.show', $agenda->slug) }}"  class="active">
-                            <i class="bi bi-question-circle"></i><span>Slido Pertanyaan</span>
+                        @if(!empty($agenda->slidolink)) <a href="{{ route('slido.show', $agenda->slug) }}">
+                            <i class="bi bi-question-circle"></i><span> Link Slido Pertanyaan</span>
                         </a>
                         @endif
                     @endif
@@ -39,14 +48,18 @@
                         @endforeach
                     @endif
 
-                    @if($agenda->survey && $agenda->survey->is_active == 1)
-                        <a href="{{ route('survey.show', $agenda->slug) }}">
-                            <i class="bi bi-clipboard-check"></i><span> Survey</span>
-                        </a>
+                    @if($agenda->surveys->count() > 0)
+                        @foreach ($agenda->surveys as $survey)
+                            @if ($survey->is_active == 1)
+                                <a href="{{ route('survey.show', ['slug' => $agenda->slug, 'survey' => $survey->slug]) }}">
+                                    <i class="bi bi-clipboard-check"></i><span> {{ $survey->title }}</span>
+                                </a>
+                            @endif
+                        @endforeach
                     @endif
 
                     @if(!empty($agenda->linksertifikat)) <a href="{{ $agenda->linksertifikat }}" target="_blank">
-                        <i class="bi bi-camera-video"></i><span> Link Sertifikat</span>
+                        <i class="bi bi-paperclip"></i><span> Link Sertifikat</span>
                     </a>
                     @endif
                 </div>
