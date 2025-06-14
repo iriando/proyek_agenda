@@ -8,6 +8,7 @@ use App\Http\Controllers\SlidoController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\PesertaController;
+use MarcoGermani87\FilamentCaptcha\Rules\Captcha;
 
 // use App\Http\Controllers\Api\AgendaController;
 
@@ -22,6 +23,10 @@ use App\Http\Controllers\PesertaController;
 |
 */
 
+Route::get('/captcha-image', function () {
+    return Captcha::create('default');
+});
+
 Route::get('/', [AgendaController::class, 'index'])->name('welcome');
 
 Route::get('/agenda/{slug}', [AgendaController::class, 'show'])->name('agenda.show');
@@ -33,8 +38,6 @@ Route::get('/slido/{slug}', [SlidoController::class, 'show'])->name('slido.show'
 //     return response()->json(['message' => 'Semua notifikasi telah dibaca']);
 // })->name('notifications.read-all');
 
-// Route::get('/survey/{survey}', SubmitSurvey::class)->name('filament.pages.submit-survey');
-
 Route::get('/survey/{slug}/{survey}', [SurveyController::class, 'show'])->name('survey.show');
 Route::post('/survey/{slug}/{survey}', [SurveyController::class, 'submit'])->name('survey.submit');
 
@@ -44,9 +47,6 @@ Route::post('/daftar-hadir/{slug}', [PesertaController::class, 'store'])->name('
 Route::get('/tes', function () {
     return view('layouts.app_new');
 });
-// Route::get('agendas/{id}', [AgendaController::class, 'show']);
 
 Route::get('/admin/detail-report/{record}', DetailReport::class)->name('filament.admin.pages.detail-report');
 
-// Route::get('agenda-landing', [AgendaController::class, 'index']);
-// Route::get('/', [AgendaController::class, 'index'])->name('agenda.index');

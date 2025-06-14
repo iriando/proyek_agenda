@@ -51,6 +51,7 @@ class PesertaController extends Controller
             'jabatan' => $request->jabatan,
             'no_hp' => $request->no_hp,
             'email' => $request->email,
+            'harapan' => $request->harapan,
         ]);
 
         return redirect()->route('peserta.show', $agenda->slug)

@@ -21,7 +21,6 @@ class Agenda extends Model
         'poster',
         'certificate_template',
         'linksertifikat',
-        // 'status',
     ];
 
     protected $casts = [

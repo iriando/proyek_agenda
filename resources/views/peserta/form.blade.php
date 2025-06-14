@@ -123,13 +123,20 @@
 
                         <label class="form-label fw-bold">Nomor HP</label>
                         <input type="text" name="no_hp" class="form-control @error('nomor_hp') is-invalid @enderror" value="{{ old('no_hp') }}" required>
-                        @error('instansi')
+                        @error('nomor_hp')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
 
                         <label class="form-label fw-bold">Email</label>
                         <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required>
-                        @error('instansi')
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+
+                        <label class="form-label fw-bold">Harapan anda untuk Kanreg XIV BKN</label>
+                        <textarea name="harapan" class="form-control" rows="3"></textarea>
+                        {{-- <input type="text" name="harapan" class="form-control @error('harapan') is-invalid @enderror" value="{{ old('harapan') }}" required> --}}
+                        @error('harapan')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
 

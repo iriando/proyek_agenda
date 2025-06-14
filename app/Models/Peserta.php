@@ -9,7 +9,6 @@ class Peserta extends Model
 {
     use HasFactory;
     protected $fillable = [
-        // 'user_id',
         'agenda_id',
         'nip',
         'nama',
@@ -17,13 +16,10 @@ class Peserta extends Model
         'jabatan',
         'no_hp',
         'email',
+        'harapan',
     ];
 
     public function agenda(){
         return $this->belongsTo(Agenda::class, 'agenda_id', 'id');
     }
-
-    // public function user(){
-    //     return $this->belongsTo(User::class, 'user_id', 'id');
-    // }
 }

@@ -120,7 +120,8 @@ class AdminPanelProvider extends PanelProvider
                     ->selectable()
                     ->editable()
             )
-            ->databaseNotifications();
+            ->databaseNotifications()
+            ->plugin(\MarcoGermani87\FilamentCaptcha\FilamentCaptcha::make());
     }
 
 }
