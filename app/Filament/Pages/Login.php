@@ -1,24 +1,22 @@
 <?php
 
-namespace App\Filament\Pages\Auth;
+namespace App\Filament\Pages;
 
+use Filament\Pages\Auth\Login as BaseLogin;
 use Filament\Forms\Form;
-use Filament\Forms\Components\Html;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\View;
 use Illuminate\Support\Facades\Auth;
-use Filament\Forms\Components\TextInput;
-use Illuminate\Support\Facades\Validator;
-use Filament\Pages\Auth\Login as BaseLogin;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
-use MarcoGermani87\FilamentCookieConsent\Components\CaptchaField;
 
-
-class CustomLogin extends BaseLogin
+class Login extends BaseLogin
 {
-    public ?string $email = null;
-    public ?string $password = null;
-    public ?string $captcha = null;
+    public ?string $email = '';
+    public ?string $password = '';
+    public ?string $captcha = '';
+    public bool $remember = false;
 
     public function form(Form $form): Form
     {
@@ -33,22 +31,23 @@ class CustomLogin extends BaseLogin
                 ->password()
                 ->required(),
 
-            CaptchaField::make('captcha')
-            ->label('Masukkan Captcha')
-            ->required(),
+            TextInput::make('captcha')
+                ->label('Kode Keamanan')
+                ->required(),
+
+            View::make('components.captcha'),
         ]);
     }
 
     public function authenticate(): ?LoginResponse
     {
-        Validator::make(
-            ['captcha' => $this->captcha],
-            ['captcha' => 'required|captcha']
-        )->validate();
+        if (!captcha_check($this->captcha)) {
+            throw ValidationException::withMessages([
+                'captcha' => 'Kode captcha salah.',
+            ]);
+        }
 
-        $this->validate();
-
-        if (! Auth::attempt([
+        if (!Auth::attempt([
             'email' => $this->email,
             'password' => $this->password,
         ], $this->remember)) {

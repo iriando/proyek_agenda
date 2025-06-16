@@ -11,6 +11,7 @@ use Filament\Support\Colors\Color;
 use App\Filament\Pages\ReportAgenda;
 use App\Filament\Pages\SubmitSurvey;
 use Filament\Navigation\NavigationItem;
+use App\Filament\Pages\Auth\CustomLogin;
 use App\Filament\Resources\UserResource;
 use Filament\Navigation\NavigationGroup;
 use App\Filament\Resources\AgendaResource;
@@ -20,6 +21,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Navigation\NavigationBuilder;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use MarcoGermani87\FilamentCaptcha\FilamentCaptcha;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -29,7 +31,6 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
-use App\Filament\Pages\Auth\CustomLogin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -40,9 +41,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->brandName('E-Agenda')
-            ->login()
-            // ->login(CustomLogin::class)
-            // ->registration()
+            ->login(\App\Filament\Pages\Login::class)
             ->colors([
                 'primary' => Color::Blue,
             ])
@@ -120,8 +119,7 @@ class AdminPanelProvider extends PanelProvider
                     ->selectable()
                     ->editable()
             )
-            ->databaseNotifications()
-            ->plugin(\MarcoGermani87\FilamentCaptcha\FilamentCaptcha::make());
+            ->databaseNotifications();
     }
 
 }

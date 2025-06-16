@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Agenda;
+use Mews\Captcha\Facades\Captcha;
 use App\Filament\Pages\DetailReport;
 use App\Filament\Pages\SubmitSurvey;
 use Illuminate\Support\Facades\Route;
@@ -8,7 +9,6 @@ use App\Http\Controllers\SlidoController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\PesertaController;
-use MarcoGermani87\FilamentCaptcha\Rules\Captcha;
 
 // use App\Http\Controllers\Api\AgendaController;
 
@@ -24,8 +24,11 @@ use MarcoGermani87\FilamentCaptcha\Rules\Captcha;
 */
 
 Route::get('/captcha-image', function () {
-    return Captcha::create('default');
+    return response()->json([
+        'captcha' => captcha_img('flat'),
+    ]);
 });
+
 
 Route::get('/', [AgendaController::class, 'index'])->name('welcome');
 
