@@ -65,8 +65,9 @@ class SurveyResource extends Resource
                 ->label('Judul agenda'),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('is_active')
-                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('is_active')
+                    ->label('Aktif')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
