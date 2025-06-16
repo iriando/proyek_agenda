@@ -38,7 +38,8 @@ Route::get('/slido/{slug}', [SlidoController::class, 'show'])->name('slido.show'
 //     return response()->json(['message' => 'Semua notifikasi telah dibaca']);
 // })->name('notifications.read-all');
 
-Route::get('/survey/{slug}/{survey}', [SurveyController::class, 'show'])->name('survey.show');
+Route::get('/agenda/{agendaSlug}/survey/{surveySlug}', [SurveyController::class, 'show'])->name('survey.show')->where('survey', '.*');
+
 Route::post('/survey/{slug}/{survey}', [SurveyController::class, 'submit'])->name('survey.submit');
 
 Route::get('/daftar-hadir/{slug}', [PesertaController::class, 'show'])->name('peserta.show');

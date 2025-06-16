@@ -49,10 +49,10 @@
                     @endif
 
                     @if($agenda->surveys->count() > 0)
-                        @foreach ($agenda->surveys as $survey)
-                            @if ($survey->is_active == 1)
-                                <a href="{{ route('survey.show', ['slug' => $agenda->slug, 'survey' => $survey->slug]) }}">
-                                    <i class="bi bi-clipboard-check"></i><span> {{ $survey->title }}</span>
+                        @foreach ($agenda->surveys as $sv)
+                            @if ($sv->is_active == 1)
+                                <a href="{{ route('survey.show', ['agendaSlug' => $agenda->slug, 'surveySlug' => $sv->slug]) }}">
+                                    <i class="bi bi-clipboard-check"></i><span> {{ $sv->title }}</span>
                                 </a>
                             @endif
                         @endforeach
@@ -93,31 +93,31 @@
 
             <div class="mb-3">
                 @foreach($survey->question as $question)
-                    <div class="mb-4">
-                        <label class="form-label fw-bold">{{ $question->question }} @if($question->required) <span class="text-danger">*</span> @endif</label>
+                    <div class="mb-3">
+                        <label class="form-label">{{ $question->question }}</label>
 
                         @if($question->type === 'text')
-                            <textarea name="answers[{{ $question->id }}]" class="form-control" rows="4" required></textarea>
+                            <textarea name="answers[{{ $question->id }}]" class="form-control"></textarea>
 
                         @elseif($question->type === 'multiple_choice')
                             @php
-                                $options = is_array($question->options) ? $question->options : json_decode($question->options, true);
+                                $options = is_array($question->options)
+                                    ? $question->options
+                                    : json_decode($question->options, true);
                             @endphp
-                            <select name="answers[{{ $question->id }}]" class="form-select" required>
-                                <option value="" selected disabled>Pilih jawaban</option>
+                            <select name="answers[{{ $question->id }}]" class="form-select">
+                                <option value="">-- Pilih jawaban --</option>
                                 @foreach($options as $option)
                                     <option value="{{ $option }}">{{ $option }}</option>
                                 @endforeach
                             </select>
 
                         @elseif($question->type === 'rating')
-                            <select name="answers[{{ $question->id }}]" class="form-select" required>
-                                <option value="" selected disabled>Pilih rating</option>
-                                <option value="1">⭐</option>
-                                <option value="2">⭐⭐</option>
-                                <option value="3">⭐⭐⭐</option>
-                                <option value="4">⭐⭐⭐⭐</option>
-                                <option value="5">⭐⭐⭐⭐⭐</option>
+                            <select name="answers[{{ $question->id }}]" class="form-select">
+                                <option value="">-- Pilih rating --</option>
+                                @for($i = 1; $i <= 5; $i++)
+                                    <option value="{{ $i }}">{{ str_repeat('⭐', $i) }}</option>
+                                @endfor
                             </select>
                         @endif
                     </div>

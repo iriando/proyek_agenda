@@ -40,7 +40,7 @@ class Survey extends Model
 
         // Perbarui slug jika judul diubah
         static::updating(function ($survey) {
-            if ($survey->isDirty('judul')) {
+            if ($survey->isDirty('title')) {
                 $survey->slug = self::generateUniqueSlug($survey->title);
             }
         });
