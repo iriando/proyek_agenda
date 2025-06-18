@@ -21,6 +21,7 @@ class Agenda extends Model
         'poster',
         'certificate_template',
         'linksertifikat',
+        'vb'
     ];
 
     protected $casts = [
@@ -43,6 +44,10 @@ class Agenda extends Model
 
     public function surveys(){
         return $this->hasmany(Survey::class);
+    }
+
+    public function links(){
+        return $this->hasmany(Link_add::class);
     }
 
     public function getStatusAttribute() //accessornya

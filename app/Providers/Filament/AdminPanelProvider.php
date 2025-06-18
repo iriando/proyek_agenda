@@ -31,6 +31,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use App\Filament\Resources\LinkAddResource;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -85,6 +86,7 @@ class AdminPanelProvider extends PanelProvider
                         ...AgendaResource::getNavigationItems(),
                         // ...MateriResource::getNavigationItems(),
                         ...SurveyResource::getNavigationItems(),
+                        ...LinkAddResource::getNavigationItems(),
                         ...ReportAgenda::getNavigationItems(),
                     ]),
                     NavigationGroup::make('Pengaturan')

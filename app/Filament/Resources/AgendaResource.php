@@ -78,6 +78,12 @@ class AgendaResource extends Resource
                         ->directory('poster')
                         ->image()
                         ->reorderable(),
+                    Forms\Components\FileUpload::make('vb')
+                        ->label('Virtual Background')
+                        ->disk('public')
+                        ->directory('vb')
+                        ->image()
+                        ->reorderable(),
                     // Forms\Components\FileUpload::make('certificate_template')
                     //     ->label('Template Sertifikat (Word .docx)')
                     //     ->disk('public')
@@ -86,6 +92,7 @@ class AgendaResource extends Resource
                     //     ->preserveFilenames()
                     //     ->downloadable(),
                     Forms\Components\TextInput::make('linksertifikat')
+                        ->label('Link Sertifikat')
                         ->required()
                         ->maxLength(191),
                 ]),
@@ -128,6 +135,18 @@ class AgendaResource extends Resource
                         'Selesai' => 'success',
                     })
                     ->sortable(),
+                Tables\Columns\ImageColumn::make('poster')
+                    ->url(fn ($record) => asset('uploads/' . $record->poster))
+                    ->getstateusing(fn ($record) => 'uploads/' . $record->poster)
+                    ->openUrlInNewTab()
+                    ->square()
+                    ->height(50),
+                Tables\Columns\ImageColumn::make('vb')
+                    ->label('Virtual Background')
+                    ->url(fn ($record) => asset('uploads/' . $record->vb))
+                    ->openUrlInNewTab()
+                    ->square()
+                    ->height(50),
                 // Tables\Columns\ToggleColumn::make('survey.is_active')
                 //     ->label('Survey')
                 //     ->disabled(fn ($record): bool => !Auth::user()->hasRole('admin') || !$record->survey)

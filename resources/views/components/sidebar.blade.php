@@ -25,14 +25,19 @@
                         @endif
                         @if(!empty($agenda->slidolink))
                             <a href="{{ route('slido.show', $agenda->slug) }}" class="{{ request()->routeIs('slido.show') ? 'active' : '' }}">
-                                <i class="bi bi-question-circle"></i><span> Link Slido Pertanyaan</span>
+                                <i class="bi bi-question-circle"></i><span> Link Slido (Pertanyaan)</span>
+                            </a>
+                        @endif
+                        @if(!empty($agenda->vb))
+                            <a href="{{ asset('uploads/' . $agenda->vb) }}" target="_blank">
+                                <i class="bi bi-card-image"></i><span> Download Virtual Background</span>
                             </a>
                         @endif
                     @endif
 
                     @if($agenda->materi->count() > 0)
                         @foreach($agenda->materi as $materi)
-                            <a href="../uploads/{{$materi->file }}" download>
+                            <a href="{{ asset('uploads/' . $materi->file) }}" download>
                                 <i class="bi bi-file-earmark-arrow-down"></i><span>Download materi {{ $materi->judul }}</span>
                             </a>
                         @endforeach
@@ -53,5 +58,16 @@
                             <i class="bi bi-paperclip"></i><span> Link Sertifikat</span>
                         </a>
                     @endif
+
+                    @if($agenda->links->count() > 0)
+                        @foreach($agenda->links as $link)
+                            @if($link->is_active)
+                                <a href="{{ $link->link }}" target="_blank">
+                                    <i class="bi bi-link-45deg"></i><span>{{ $link->title }}</span>
+                                </a>
+                            @endif
+                        @endforeach
+                    @endif
+
                 </div>
             </div><!-- End Services List -->
