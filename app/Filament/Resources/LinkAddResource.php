@@ -18,7 +18,7 @@ class LinkAddResource extends Resource
 {
     protected static ?string $model = Link_add::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-link';
 
     public static function form(Form $form): Form
     {

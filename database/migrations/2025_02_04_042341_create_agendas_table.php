@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('judul');
             $table->string('slug')->unique();
             $table->string('deskripsi');
-            $table->string('zoomlink');
-            $table->string('slidolink');
+            $table->string('zoomlink')->nullable();
+            $table->string('slidolink')->nullable();
             $table->datetime('tanggal_pelaksanaan');
             $table->datetime('tanggal_selesai');
             $table->string('poster')->nullable();

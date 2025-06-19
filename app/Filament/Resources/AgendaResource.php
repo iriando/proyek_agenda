@@ -60,10 +60,8 @@ class AgendaResource extends Resource
                         ->disabled(),
                     Forms\Components\TextArea::make('deskripsi'),
                     Forms\Components\TextInput::make('zoomlink')
-                        ->required()
                         ->maxLength(191),
                     Forms\Components\TextInput::make('slidolink')
-                        ->required()
                         ->maxLength(191),
                     Forms\Components\DateTimePicker::make('tanggal_pelaksanaan')
                         ->label('waktu dan tanggal pelaksanaan')
@@ -93,7 +91,6 @@ class AgendaResource extends Resource
                     //     ->downloadable(),
                     Forms\Components\TextInput::make('linksertifikat')
                         ->label('Link Sertifikat')
-                        ->required()
                         ->maxLength(191),
                 ]),
                 // Section::make('pilih Pemateri')
