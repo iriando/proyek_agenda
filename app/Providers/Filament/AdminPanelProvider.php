@@ -31,6 +31,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use App\Filament\Resources\AttributeDaftarHadirResource;
 use App\Filament\Resources\LinkAddResource;
 
 class AdminPanelProvider extends PanelProvider
@@ -113,6 +114,8 @@ class AdminPanelProvider extends PanelProvider
                         ]))
                         ->url(fn (): string => '/admin/permissions')
                         ->visible(fn(): bool => auth()->user()->can('view permission')),
+
+                        ...AttributeDaftarHadirResource::getNavigationItems(),
                     ]),
                 ]);
             })

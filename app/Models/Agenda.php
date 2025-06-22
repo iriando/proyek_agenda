@@ -50,6 +50,10 @@ class Agenda extends Model
         return $this->hasmany(Link_add::class);
     }
 
+    public function attdaftarhadir(){
+        return $this->hasOne(Att_daftarhadir::class);
+    }
+
     public function getStatusAttribute() //accessornya
     {
         $now = Carbon::now('GMT+9')->format('Y-m-d H:i:s'); // Ambil tanggal sekarang dalam format YYYY-MM-DD

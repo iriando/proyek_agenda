@@ -5,22 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Peserta extends Model
+class Att_daftarhadir extends Model
 {
     use HasFactory;
     protected $fillable = [
         'agenda_id',
-        'nip',
-        'nama',
-        'instansi',
-        'jabatan',
-        'no_hp',
-        'email',
-        'harapan',
+        'title',
+        'description',
+        'is_active',
     ];
 
     public function agenda(){
         return $this->belongsTo(Agenda::class, 'agenda_id', 'id');
     }
 
+    public function instansi(){
+        return $this->hasMany(Instansi::class, 'att_id', 'id');
+    }
+
+    public function peserta(){
+        return $this->hasMany(Peserta::class);
+    }
 }
