@@ -21,6 +21,8 @@ use App\Filament\Resources\AgendaResource\RelationManagers;
 use App\Filament\Resources\AgendaResource\RelationManagers\MateriRelationManager;
 use App\Filament\Resources\AgendaResource\RelationManagers\PesertaRelationManager;
 use App\Filament\Resources\AgendaResource\RelationManagers\PemateriRelationManager;
+use App\Models\Att_daftarhadir;
+use App\Models\Instansi;
 
 class AgendaResource extends Resource
 {
@@ -82,6 +84,9 @@ class AgendaResource extends Resource
                         ->directory('vb')
                         ->image()
                         ->reorderable(),
+                    Forms\Components\Select::make('att_daftarhadir_id')
+                        ->label('Pilih grup instansi daftar hadir')
+                        ->options(Att_daftarhadir::all()->pluck('title', 'id')),
                     // Forms\Components\FileUpload::make('certificate_template')
                     //     ->label('Template Sertifikat (Word .docx)')
                     //     ->disk('public')
@@ -144,6 +149,8 @@ class AgendaResource extends Resource
                     ->openUrlInNewTab()
                     ->square()
                     ->height(50),
+                Tables\Columns\TextColumn::make('attdaftarhadir.title')
+                ->label('Grup daftar hadir'),
                 // Tables\Columns\ToggleColumn::make('survey.is_active')
                 //     ->label('Survey')
                 //     ->disabled(fn ($record): bool => !Auth::user()->hasRole('admin') || !$record->survey)

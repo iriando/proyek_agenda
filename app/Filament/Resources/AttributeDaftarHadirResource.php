@@ -28,11 +28,6 @@ class AttributeDaftarHadirResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('agenda_id')
-                    ->label('Pilih agenda')
-                    ->required()
-                    ->searchable()
-                    ->options(Agenda::all()->pluck('judul', 'id')),
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(191),
@@ -50,8 +45,6 @@ class AttributeDaftarHadirResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('agenda.judul')
-                ->label('Judul agenda'),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
                 Tables\Columns\ToggleColumn::make('duplikat')

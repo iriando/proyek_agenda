@@ -20,6 +20,8 @@ class LinkAddResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-link';
 
+    protected static ?string $navigationLabel = 'Link tambahan';
+
     public static function form(Form $form): Form
     {
         return $form

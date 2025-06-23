@@ -18,7 +18,8 @@ class InstansiRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('Instansi')
+                Forms\Components\TextInput::make('nama_instansi')
+                    ->label('Input Nama Instansi')
                     ->required()
                     ->maxLength(255),
             ]);

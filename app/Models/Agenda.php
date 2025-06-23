@@ -21,7 +21,8 @@ class Agenda extends Model
         'poster',
         'certificate_template',
         'linksertifikat',
-        'vb'
+        'vb',
+        'att_daftarhadir_id'
     ];
 
     protected $casts = [
@@ -51,7 +52,7 @@ class Agenda extends Model
     }
 
     public function attdaftarhadir(){
-        return $this->hasOne(Att_daftarhadir::class);
+        return $this->belongsTo(Att_daftarhadir::class, 'att_daftarhadir_id');
     }
 
     public function getStatusAttribute() //accessornya
