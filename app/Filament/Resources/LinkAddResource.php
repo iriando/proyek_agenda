@@ -98,4 +98,9 @@ class LinkAddResource extends Resource
             'edit' => Pages\EditLinkAdd::route('/{record}/edit'),
         ];
     }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Link tambahan';
+    }
 }

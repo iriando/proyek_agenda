@@ -10,6 +10,11 @@ class EditLinkAdd extends EditRecord
 {
     protected static string $resource = LinkAddResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Edit Link Tambahan';
+    }
+
     protected function getHeaderActions(): array
     {
         return [

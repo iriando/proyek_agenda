@@ -93,4 +93,9 @@ class AttributeDaftarHadirResource extends Resource
             'edit' => Pages\EditAttributeDaftarHadir::route('/{record}/edit'),
         ];
     }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Daftar Hadir';
+    }
 }
