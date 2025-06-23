@@ -48,7 +48,7 @@ class AttributeDaftarHadirResource extends Resource
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
                 Tables\Columns\ToggleColumn::make('duplikat')
-                    ->label('Ijin Data Duplikat')
+                    ->label('Ijin NIP Duplikat')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('description'),
                 Tables\Columns\TextColumn::make('created_at')

@@ -39,11 +39,20 @@ class AgendaController extends Controller
      */
     public function show(string $slug)
     {
-        $agenda = Agenda::where('slug', $slug)->with(['surveys', 'links'])->firstOrFail();
-        $agendaBaru = Agenda::orderBy('created_at', 'asc')->take(3)->get();
-        return view('show', compact('agenda','agendaBaru'));
+        $agenda = Agenda::with
+        ([
+            'surveys',
+            'links',
+            'attdaftarhadir.instansi',
+        ])
+        ->where('slug', $slug)
+        ->firstOrFail();
 
-        // $agenda = Agenda::where('slug', $slug)->with('surveys')->firstOrFail();
+        $agendaBaru = Agenda::orderBy('created_at', 'asc')->take(3)->get();
+
+        return view('show', compact('agenda', 'agendaBaru'));
+
+        // $agenda = Agenda::where('slug', $slug)->with(['surveys', 'links'])->firstOrFail();
         // $agendaBaru = Agenda::orderBy('created_at', 'asc')->take(3)->get();
         // return view('show', compact('agenda','agendaBaru'));
     }

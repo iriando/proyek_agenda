@@ -16,6 +16,6 @@ class Instansi extends Model
     ];
 
     public function attdaftarhadir(){
-        return $this->belongsTo(Agenda::class, 'att_daftarhadir', 'id');
+        return $this->belongsTo(Att_daftarhadir::class, 'att_id', 'id');
     }
 }

@@ -52,7 +52,7 @@ class Agenda extends Model
     }
 
     public function attdaftarhadir(){
-        return $this->belongsTo(Att_daftarhadir::class, 'att_daftarhadir_id');
+        return $this->belongsTo(Att_daftarhadir::class, 'att_daftarhadir_id', 'id');
     }
 
     public function getStatusAttribute() //accessornya

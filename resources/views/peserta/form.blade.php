@@ -32,7 +32,9 @@
                 $nipSession = session('nip_terdaftar');
                 $sudahTerdaftar = false;
 
-                if ($nipSession) {
+                $duplikatDiizinkan = $agenda->attdaftarhadir?->duplikat ?? false;
+
+                if ($nipSession && !$duplikatDiizinkan) {
                     $sudahTerdaftar = $agenda->peserta->where('nip', $nipSession)->isNotEmpty();
                 }
             @endphp
@@ -62,10 +64,24 @@
                         @enderror
 
                         <label class="form-label fw-bold">Instansi</label>
-                        <input type="text" name="instansi" class="form-control @error('instansi') is-invalid @enderror" value="{{ old('instansi') }}" required>
+                        @if($agenda->attdaftarhadir && $agenda->attdaftarhadir->instansi->isNotEmpty())
+                            <select name="instansi" class="form-select @error('instansi') is-invalid @enderror" required>
+                                <option value="">-- Pilih Instansi --</option>
+                                @foreach($agenda->attdaftarhadir->instansi as $instansi)
+                                    <option value="{{ $instansi->nama_instansi }}"
+                                        {{ old('instansi') == $instansi->nama_instansi ? 'selected' : '' }}>
+                                        {{ $instansi->nama_instansi }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        @else
+                            <input type="text" name="instansi" class="form-control @error('instansi') is-invalid @enderror"
+                                value="{{ old('instansi') }}" placeholder="Tulis nama instansi..." required>
+                        @endif
                         @error('instansi')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+
 
                         <label class="form-label fw-bold">Nomor HP</label>
                         <input type="text" name="no_hp" class="form-control @error('nomor_hp') is-invalid @enderror" value="{{ old('no_hp') }}" required>
