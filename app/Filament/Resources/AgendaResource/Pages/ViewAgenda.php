@@ -66,7 +66,7 @@ class ViewAgenda extends ViewRecord
 
     public function getTitle(): string
     {
-        return 'Lihat kegiatan';
+        return 'Rincian kegiatan';
     }
 
 }

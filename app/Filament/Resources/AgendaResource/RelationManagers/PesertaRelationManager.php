@@ -9,19 +9,11 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Tables\Actions\Action;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Filament\Notifications\Notification;
-use PhpOffice\PhpWord\TemplateProcessor;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
+// use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
 use Filament\Resources\RelationManagers\RelationManager;
-use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
-
-
-
-
+use App\Exports\PesertaExport;
+use Maatwebsite\Excel\Facades\Excel;
+// use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 class PesertaRelationManager extends RelationManager
 {
     protected static string $relationship = 'peserta';
@@ -49,126 +41,135 @@ class PesertaRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                // Tables\Actions\CreateAction::make(),
-                ExportAction::make()
-                    ->label('Export Semua'),
+                Action::make('export_excel')
+                ->label('Export')
+                ->icon('heroicon-o-document-arrow-down')
+                ->action(function ($livewire) {
+                    $agenda = $livewire->getOwnerRecord();
+                    $judulSlug = Str::slug($agenda->judul);
+
+                    return Excel::download(
+                        new PesertaExport($agenda->id),
+                        'peserta-' . $judulSlug . '.xlsx'
+                    );
+                }),
             ])
             ->actions([
                 // Tables\Actions\ViewAction::make(),
                 Tables\Actions\DeleteAction::make(),
-                Tables\Actions\Action::make('generate_sertifikat')
-                    ->label('Sertifikat')
-                    ->icon('heroicon-o-document-arrow-down')
-                    ->color('success')
-                    ->requiresConfirmation()
-                    ->action(function ($record) {
-                        $agenda = $record->agenda;
+                // Tables\Actions\Action::make('generate_sertifikat')
+                //     ->label('Sertifikat')
+                //     ->icon('heroicon-o-document-arrow-down')
+                //     ->color('success')
+                //     ->requiresConfirmation()
+                //     ->action(function ($record) {
+                //         $agenda = $record->agenda;
 
-                        if (!$agenda->certificate_template || !Storage::disk('public')->exists($agenda->certificate_template)) {
-                            Notification::make()
-                                ->title('Gagal')
-                                ->body('Template sertifikat belum tersedia atau tidak ditemukan.')
-                                ->danger()
-                                ->send();
-                            return;
-                        }
+                //         if (!$agenda->certificate_template || !Storage::disk('public')->exists($agenda->certificate_template)) {
+                //             Notification::make()
+                //                 ->title('Gagal')
+                //                 ->body('Template sertifikat belum tersedia atau tidak ditemukan.')
+                //                 ->danger()
+                //                 ->send();
+                //             return;
+                //         }
 
-                        // Siapkan path
-                        $templatePath = Storage::disk('public')->path($agenda->certificate_template);
-                        File::ensureDirectoryExists(storage_path('app/temp'));
+                //         // Siapkan path
+                //         $templatePath = Storage::disk('public')->path($agenda->certificate_template);
+                //         File::ensureDirectoryExists(storage_path('app/temp'));
 
-                        // Format nomor sertifikat
-                        $nomorSertifikat = str_pad($record->id, 4, '0', STR_PAD_LEFT) . '/' .
-                                        str_pad($agenda->id, 4, '0', STR_PAD_LEFT) . '/' .
-                                        Str::slug($agenda->judul) . '/' .
-                                        $agenda->tanggal_pelaksanaan->format('Y');
+                //         // Format nomor sertifikat
+                //         $nomorSertifikat = str_pad($record->id, 4, '0', STR_PAD_LEFT) . '/' .
+                //                         str_pad($agenda->id, 4, '0', STR_PAD_LEFT) . '/' .
+                //                         Str::slug($agenda->judul) . '/' .
+                //                         $agenda->tanggal_pelaksanaan->format('Y');
 
-                        $outputPath = storage_path('app/temp/sertifikat-' . $record->id . '.docx');
+                //         $outputPath = storage_path('app/temp/sertifikat-' . $record->id . '.docx');
 
-                        // Proses template
-                        $template = new TemplateProcessor($templatePath);
-                        $template->setValues([
-                            'nama' => $record->nama,
-                            'nip' => $record->nip,
-                            'jabatan' => $record->jabatan ?? '-',
-                            'kegiatan' => $agenda->judul,
-                            'nomor' => $nomorSertifikat,
-                            'instansi' => $record->instansi,
-                            'perusahaan' => 'BKN Kanreg XIV',
-                            'tanggal' => $agenda->tanggal_pelaksanaan->translatedFormat('d F Y'),
-                        ]);
-                        $template->saveAs($outputPath);
+                //         // Proses template
+                //         $template = new TemplateProcessor($templatePath);
+                //         $template->setValues([
+                //             'nama' => $record->nama,
+                //             'nip' => $record->nip,
+                //             'jabatan' => $record->jabatan ?? '-',
+                //             'kegiatan' => $agenda->judul,
+                //             'nomor' => $nomorSertifikat,
+                //             'instansi' => $record->instansi,
+                //             'perusahaan' => 'BKN Kanreg XIV',
+                //             'tanggal' => $agenda->tanggal_pelaksanaan->translatedFormat('d F Y'),
+                //         ]);
+                //         $template->saveAs($outputPath);
 
-                        return response()->download($outputPath)->deleteFileAfterSend();
-                    }
-                ),
+                //         return response()->download($outputPath)->deleteFileAfterSend();
+                //     }
+                // ),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-                ExportBulkAction::make()
-                    ->label('Export'),
-                Tables\Actions\BulkAction::make('generate_sertifikat_docx_zip')
-                ->label('Generate Sertifikat (ZIP .docx)')
-                ->icon('heroicon-o-archive-box-arrow-down')
-                ->requiresConfirmation()
-                ->action(function ($records) {
-                    $agenda = $records->first()->agenda;
+                // ExportBulkAction::make()
+                //     ->label('Export'),
+                // Tables\Actions\BulkAction::make('generate_sertifikat_docx_zip')
+                // ->label('Generate Sertifikat (ZIP .docx)')
+                // ->icon('heroicon-o-archive-box-arrow-down')
+                // ->requiresConfirmation()
+                // ->action(function ($records) {
+                //     $agenda = $records->first()->agenda;
 
-                    if (!$agenda->certificate_template || !Storage::disk('public')->exists($agenda->certificate_template)) {
-                        Notification::make()
-                            ->title('Gagal')
-                            ->body('Template sertifikat tidak tersedia.')
-                            ->danger()
-                            ->send();
-                        return;
-                    }
+                //     if (!$agenda->certificate_template || !Storage::disk('public')->exists($agenda->certificate_template)) {
+                //         Notification::make()
+                //             ->title('Gagal')
+                //             ->body('Template sertifikat tidak tersedia.')
+                //             ->danger()
+                //             ->send();
+                //         return;
+                //     }
 
-                    $templatePath = Storage::disk('public')->path($agenda->certificate_template);
-                    $tempDir = storage_path('app/temp/docx');
-                    File::ensureDirectoryExists($tempDir);
+                //     $templatePath = Storage::disk('public')->path($agenda->certificate_template);
+                //     $tempDir = storage_path('app/temp/docx');
+                //     File::ensureDirectoryExists($tempDir);
 
-                    $docxPaths = [];
+                //     $docxPaths = [];
 
-                    foreach ($records as $record) {
-                        $nomor = str_pad($record->id, 4, '0', STR_PAD_LEFT) . '/' . str_pad($agenda->id, 4, '0', STR_PAD_LEFT) . '/' . Str::slug($agenda->judul) . '/' . $agenda->tanggal_pelaksanaan->format('Y');
+                //     foreach ($records as $record) {
+                //         $nomor = str_pad($record->id, 4, '0', STR_PAD_LEFT) . '/' . str_pad($agenda->id, 4, '0', STR_PAD_LEFT) . '/' . Str::slug($agenda->judul) . '/' . $agenda->tanggal_pelaksanaan->format('Y');
 
-                        $fileName = 'sertifikat-' . Str::slug($record->nama) . '.docx';
-                        $outputPath = $tempDir . '/' . $fileName;
+                //         $fileName = 'sertifikat-' . Str::slug($record->nama) . '.docx';
+                //         $outputPath = $tempDir . '/' . $fileName;
 
-                        $template = new TemplateProcessor($templatePath);
-                        $template->setValues([
-                            'nama' => $record->nama,
-                            'nip' => $record->nip,
-                            'jabatan' => $record->jabatan ?? '-',
-                            'kegiatan' => $agenda->judul,
-                            'nomor' => $nomor,
-                            'instansi' => $record->instansi,
-                            'perusahaan' => 'BKN Kanreg XIV',
-                            'tanggal' => $agenda->tanggal_pelaksanaan->translatedFormat('d F Y'),
-                        ]);
-                        $template->saveAs($outputPath);
+                //         $template = new TemplateProcessor($templatePath);
+                //         $template->setValues([
+                //             'nama' => $record->nama,
+                //             'nip' => $record->nip,
+                //             'jabatan' => $record->jabatan ?? '-',
+                //             'kegiatan' => $agenda->judul,
+                //             'nomor' => $nomor,
+                //             'instansi' => $record->instansi,
+                //             'perusahaan' => 'BKN Kanreg XIV',
+                //             'tanggal' => $agenda->tanggal_pelaksanaan->translatedFormat('d F Y'),
+                //         ]);
+                //         $template->saveAs($outputPath);
 
-                        $docxPaths[] = $outputPath;
-                    }
+                //         $docxPaths[] = $outputPath;
+                //     }
 
-                    // Buat ZIP dari semua .docx
-                    $zipPath = storage_path('app/temp/sertifikat-bulk-' . now()->timestamp . '.zip');
-                    $zip = new ZipArchive();
-                    if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
-                        foreach ($docxPaths as $path) {
-                            $zip->addFile($path, basename($path));
-                        }
-                        $zip->close();
-                    }
+                //     // Buat ZIP dari semua .docx
+                //     $zipPath = storage_path('app/temp/sertifikat-bulk-' . now()->timestamp . '.zip');
+                //     $zip = new ZipArchive();
+                //     if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
+                //         foreach ($docxPaths as $path) {
+                //             $zip->addFile($path, basename($path));
+                //         }
+                //         $zip->close();
+                //     }
 
-                    // Hapus semua file docx setelah masuk ZIP
-                    foreach ($docxPaths as $path) {
-                        File::delete($path);
-                    }
+                //     // Hapus semua file docx setelah masuk ZIP
+                //     foreach ($docxPaths as $path) {
+                //         File::delete($path);
+                //     }
 
-                    // Download ZIP dan hapus setelah dikirim
-                    return response()->download($zipPath)->deleteFileAfterSend(true);
-                }),
+                //     // Download ZIP dan hapus setelah dikirim
+                //     return response()->download($zipPath)->deleteFileAfterSend(true);
+                // }),
 
 
             ])

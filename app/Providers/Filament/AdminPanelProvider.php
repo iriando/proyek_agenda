@@ -88,7 +88,7 @@ class AdminPanelProvider extends PanelProvider
                         // ...MateriResource::getNavigationItems(),
                         ...SurveyResource::getNavigationItems(),
                         ...LinkAddResource::getNavigationItems(),
-                        ...ReportAgenda::getNavigationItems(),
+                        // ...ReportAgenda::getNavigationItems(),
                     ]),
                     NavigationGroup::make('Pengaturan')
                     ->items([

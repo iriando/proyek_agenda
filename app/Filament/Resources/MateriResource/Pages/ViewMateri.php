@@ -12,7 +12,7 @@ class ViewMateri extends ViewRecord
 
     public function getTitle(): string
     {
-        return 'Lihat materi';
+        return 'Rincian Materi';
     }
 
     protected function getHeaderActions(): array

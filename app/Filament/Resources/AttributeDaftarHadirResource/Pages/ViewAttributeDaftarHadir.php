@@ -16,4 +16,9 @@ class ViewAttributeDaftarHadir extends ViewRecord
             Actions\EditAction::make(),
         ];
     }
+
+    public function getTitle(): string
+    {
+        return 'Rincian Daftar Hadir';
+    }
 }

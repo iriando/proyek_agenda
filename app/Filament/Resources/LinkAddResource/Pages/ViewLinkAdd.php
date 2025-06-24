@@ -16,4 +16,9 @@ class ViewLinkAdd extends ViewRecord
             Actions\EditAction::make(),
         ];
     }
+
+    public function getTitle(): string
+    {
+        return 'Rincian Link';
+    }
 }

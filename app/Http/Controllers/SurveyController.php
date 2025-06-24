@@ -40,7 +40,6 @@ class SurveyController extends Controller
             ]);
         }
 
-        return redirect()->route('survey.show', [$agenda->slug, $survey->slug])
-                         ->with('success', 'Survey berhasil dikirim!');
+        return redirect()->route('survey.show', [$agenda->slug, $survey->slug])->with('success', 'Survey berhasil dikirim!');
     }
 }

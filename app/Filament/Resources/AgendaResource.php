@@ -120,9 +120,9 @@ class AgendaResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('judul')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('pemateri.user.name')
-                ->label('Pemateri')
-                    ->searchable(),
+                // Tables\Columns\TextColumn::make('pemateri.user.name')
+                // ->label('Pemateri')
+                //     ->searchable(),
                 Tables\Columns\TextColumn::make('tanggal_pelaksanaan')
                     ->dateTime('d M Y H:i')
                     ->sortable(),
@@ -137,18 +137,18 @@ class AgendaResource extends Resource
                         'Selesai' => 'success',
                     })
                     ->sortable(),
-                Tables\Columns\ImageColumn::make('poster')
-                    ->url(fn ($record) => asset('uploads/' . $record->poster))
-                    ->getstateusing(fn ($record) => 'uploads/' . $record->poster)
-                    ->openUrlInNewTab()
-                    ->square()
-                    ->height(50),
-                Tables\Columns\ImageColumn::make('vb')
-                    ->label('Virtual Background')
-                    ->url(fn ($record) => asset('uploads/' . $record->vb))
-                    ->openUrlInNewTab()
-                    ->square()
-                    ->height(50),
+                // Tables\Columns\ImageColumn::make('poster')
+                //     ->url(fn ($record) => asset('uploads/' . $record->poster))
+                //     ->getstateusing(fn ($record) => 'uploads/' . $record->poster)
+                //     ->openUrlInNewTab()
+                //     ->square()
+                //     ->height(50),
+                // Tables\Columns\ImageColumn::make('vb')
+                //     ->label('Virtual Background')
+                //     ->url(fn ($record) => asset('uploads/' . $record->vb))
+                //     ->openUrlInNewTab()
+                //     ->square()
+                //     ->height(50),
                 Tables\Columns\TextColumn::make('attdaftarhadir.title')
                 ->label('Grup daftar hadir'),
                 // Tables\Columns\ToggleColumn::make('survey.is_active')
