@@ -12,6 +12,7 @@ class Link_add extends Model
         'agenda_id',
         'title',
         'link',
+        'icon',
         'is_active',
     ];
 

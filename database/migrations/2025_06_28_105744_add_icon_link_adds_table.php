@@ -12,14 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('link_adds', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('agenda_id');
-            $table->string('title');
-            $table->text('link');
-            $table->boolean('is_active')->nullable();
-            $table->timestamps();
-
-            $table->foreign('agenda_id')->references('id')->on('agendas')->onDelete('cascade');
+            $table->string('icon');
         });
     }
 
@@ -28,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('link_adds');
+        Schema::table('link_adds', function (Blueprint $table) {
+            //
+        });
     }
 };

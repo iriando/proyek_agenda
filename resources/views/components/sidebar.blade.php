@@ -62,8 +62,18 @@
                     @if($agenda->links->count() > 0)
                         @foreach($agenda->links as $link)
                             @if($link->is_active)
-                                <a href="{{ $link->link }}" target="_blank">
-                                    <i class="bi bi-link-45deg"></i><span>{{ $link->title }}</span>
+                                <a href="{{ $link->link }}" target="_blank"
+                                    class="flex items-center space-x-1 py-1 px-2 text-sm {{ request()->url() === $link->link ? 'active' : '' }}">
+
+                                    @if(Str::startsWith($link->icon, 'heroicon'))
+                                        <i class="me-1 d-inline-flex align-items-center" style="width: 1.8rem; height: 1.8rem;">
+                                            <x-dynamic-component :component="$link->icon" class="w-5 h-5" />
+                                        </i>
+                                    @else
+                                        <i class="bi bi-link-45deg text-primary-600"></i>
+                                    @endif
+
+                                    <span>{{ $link->title }}</span>
                                 </a>
                             @endif
                         @endforeach

@@ -11,8 +11,9 @@ use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\LinkAddResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\LinkAddResource\RelationManagers;
+use Illuminate\Support\Facades\File;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\ViewField;
 
 class LinkAddResource extends Resource
 {
@@ -39,8 +40,26 @@ class LinkAddResource extends Resource
                     ->required()
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\Toggle::make('is_active')
-                    ->required(),
+                Forms\Components\Hidden::make('icon')
+                    ->required()
+                    ->extraAttributes(['name' => 'data.icon']),
+                ViewField::make('icon_picker')
+                    ->label('Pilih Icon')
+                    ->view('components.icon-picker')
+                    ->columnSpanFull()
+                    ->viewData([
+                        'icons' => [
+                            'heroicon-o-link' => 'Link',
+                            'heroicon-o-calendar' => 'Kalender',
+                            'heroicon-o-star' => 'Bintang',
+                            'heroicon-o-video-camera' => 'Video',
+                            'heroicon-o-globe-alt' => 'Globe',
+                            'heroicon-o-user' => 'Pengguna',
+                            'heroicon-o-arrow-down-tray' => 'Unduh',
+                            'heroicon-o-question-mark-circle' => 'Pertanyaan',
+                            'heroicon-o-book-open' => 'Buku',
+                        ],
+                    ])
             ]);
     }
 
@@ -56,6 +75,7 @@ class LinkAddResource extends Resource
                     ->label('Aktif')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('link'),
+                Tables\Columns\TextColumn::make('icon'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

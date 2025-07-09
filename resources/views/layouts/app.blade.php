@@ -83,5 +83,17 @@
     <!-- Main JS File -->
     <script src="{{ asset('js/main.js') }}"></script>
 
+    <script>
+        window.addEventListener('icon-selected', function (event) {
+            const selectedIcon = event.detail;
+            const input = document.querySelector('input[name="data.icon"]');
+            if (input) {
+                input.value = selectedIcon;
+                input.dispatchEvent(new Event('input'));
+            }
+        });
+    </script>
+
+
     </body>
 </html>
