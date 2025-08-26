@@ -12,7 +12,8 @@
                 <div class="row">
                     <div class="col-lg-7">
                         <h2 data-aos="fade-up" data-aos-delay="100">Webinar Kanreg XIV BKN</h2>
-                        <p data-aos="fade-up" data-aos-delay="200">Jelajahi topik terkini, dapatkan wawasan dari para ahli, dan perluas jaringan profesional Anda melalui webinar interaktif kami</p>
+                        <p data-aos="fade-up" data-aos-delay="200">Jelajahi topik terkini, dapatkan wawasan dari para ahli,
+                            dan perluas jaringan profesional Anda melalui webinar interaktif kami</p>
                     </div>
                     {{-- <div class="col-lg-5" data-aos="fade-up" data-aos-delay="300">
                         <form action="forms/newsletter.php" method="post" class="php-email-form">
@@ -48,12 +49,14 @@
 
                             <article>
 
-                                @if($agenda->poster)
-                                <div class="post-img">
-                                    <img src="uploads/{{$agenda->poster}}" alt="" class="img-fluid">
+                                @if ($agenda->poster)
+                                    <div class="post-img">
+                                        {{-- <img src="uploads/{{$agenda->poster}}" alt="" class="img-fluid"> --}}
+                                        <img src="{{ $agenda->poster }}" alt="" class="img-fluid">
                                     </div>
                                 @endif
-                                <span class="badge
+                                <span
+                                    class="badge
 
                                 @switch($agenda->status)
                                     @case('Selesai')
@@ -67,19 +70,20 @@
                                     @break
                                 @endswitch
 
-                                ">{{$agenda->status}}</span>
+                                ">{{ $agenda->status }}</span>
 
                                 <h2 class="title">
 
-                                    <a href="{{ route('agenda.show', $agenda->slug) }}">{{$agenda->judul}}</a>
+                                    <a href="{{ route('agenda.show', $agenda->slug) }}">{{ $agenda->judul }}</a>
 
                                 </h2>
 
 
                                 <div class="d-flex align-items-center">
-                                    <img src="bkn/logo_bkn.png" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                    <img src="bkn/logo_bkn.png" alt=""
+                                        class="img-fluid post-author-img flex-shrink-0">
                                     <div class="post-meta">
-                                        <p class="post-author">{{$agenda->deskripsi}}</p>
+                                        <p class="post-author">{{ $agenda->deskripsi }}</p>
                                         <p class="post-date">
                                             <time>{{ date('d M Y H:i', strtotime($agenda->tanggal_pelaksanaan)) }}</time>
                                         </p>
@@ -115,23 +119,25 @@
 
                             <article>
 
-                                @if($agenda->poster)
-                                <div class="post-img">
-                                    <img src="uploads/{{$agenda->poster}}" alt="" class="img-fluid">
+                                @if ($agenda->poster)
+                                    <div class="post-img">
+                                        <img src="uploads/{{ $agenda->poster }}" alt="" class="img-fluid">
                                     </div>
                                 @endif
 
                                 <h2 class="title">
-                                    <a href="{{ route('agenda.show', $agenda->slug) }}">{{$agenda->judul}}</a>
+                                    <a href="{{ route('agenda.show', $agenda->slug) }}">{{ $agenda->judul }}</a>
                                 </h2>
 
 
                                 <div class="d-flex align-items-center">
-                                    <img src="bkn/logo_bkn.png" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                    <img src="bkn/logo_bkn.png" alt=""
+                                        class="img-fluid post-author-img flex-shrink-0">
                                     <div class="post-meta">
-                                        <p class="post-author">{{$agenda->deskripsi}}</p>
+                                        <p class="post-author">{{ $agenda->deskripsi }}</p>
                                         <p class="post-date">
-                                            <time datetime="2022-01-01">{{ date('d M Y H:i', strtotime($agenda->tanggal_pelaksanaan)) }}</time>
+                                            <time
+                                                datetime="2022-01-01">{{ date('d M Y H:i', strtotime($agenda->tanggal_pelaksanaan)) }}</time>
                                         </p>
                                     </div>
                                 </div>
@@ -151,6 +157,3 @@
 
     </main>
 @endsection
-
-
-

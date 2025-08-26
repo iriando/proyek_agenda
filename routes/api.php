@@ -31,3 +31,6 @@ Route::middleware('auth.jwt')->group(function () {
     // API untuk mendapatkan detail agenda berdasarkan ID (hanya bisa diakses jika login)
     Route::get('agendas/{id}', [AgendaController::class, 'show']);
 });
+
+// API to get 3 latest agendas
+Route::apiResource('/agendas', App\Http\Controllers\Api\AgendaController::class);

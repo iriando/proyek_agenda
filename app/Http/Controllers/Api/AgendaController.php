@@ -5,12 +5,22 @@ namespace App\Http\Controllers\Api;
 use App\Models\Agenda;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AgendaResource;
 
 class AgendaController extends Controller
 {
+    // public function index()
+    // {
+    //     return response()->json(Agenda::all(), 200);
+    // }
+
     public function index()
     {
-        return response()->json(Agenda::all(), 200);
+        //get 3 latest agenda
+        $agendas = Agenda::latest()->take(3)->get();
+
+        //return collection of agendas as a resource
+        return new AgendaResource(true, 'List Data Agendas', $agendas);
     }
 
     public function show($id)
