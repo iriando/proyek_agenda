@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Agenda extends Model
 {
@@ -31,27 +32,33 @@ class Agenda extends Model
     ];
 
 
-    public function materi(){
+    public function materi()
+    {
         return $this->hasMany(Materi::class);
     }
 
-    public function pemateri(){
+    public function pemateri()
+    {
         return $this->hasMany(Pemateri::class);
     }
 
-    public function peserta(){
+    public function peserta()
+    {
         return $this->hasMany(Peserta::class);
     }
 
-    public function surveys(){
+    public function surveys()
+    {
         return $this->hasmany(Survey::class);
     }
 
-    public function links(){
+    public function links()
+    {
         return $this->hasmany(Link_add::class);
     }
 
-    public function attdaftarhadir(){
+    public function attdaftarhadir()
+    {
         return $this->belongsTo(Att_daftarhadir::class, 'att_daftarhadir_id', 'id');
     }
 
@@ -106,5 +113,4 @@ class Agenda extends Model
     {
         return 'slug';
     }
-
 }
