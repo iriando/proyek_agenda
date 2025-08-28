@@ -46,7 +46,6 @@
 
                     <div class="col-lg-8 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
                         @if (!empty($agenda->poster) && file_exists(public_path('uploads/' . $agenda->poster)))
-                            )
                             <img src="{{ asset('uploads/' . $agenda->poster) }}" class="img-fluid services-img"
                                 alt="{{ $agenda->judul }}">
                         @else
