@@ -33,4 +33,8 @@ Route::middleware('auth.jwt')->group(function () {
 });
 
 // API to get 3 latest agendas
-Route::apiResource('/agendas', App\Http\Controllers\Api\AgendaController::class);
+// Route::apiResource('/agendas', App\Http\Controllers\Api\AgendaController::class);
+
+Route::middleware('apikey')->group(function () {
+    Route::apiResource('/agendas', App\Http\Controllers\Api\AgendaController::class);
+});
