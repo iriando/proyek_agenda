@@ -19,7 +19,7 @@ class SubmitSurvey extends Page
     public $questions = [];
     public $answers = []; // Jawaban peserta
 
-    public static function getLayout(): string
+    public function getLayout(): string
     {
         return 'filament::components.layouts.base'; // Menggunakan layout dasar tanpa sidebar
     }
