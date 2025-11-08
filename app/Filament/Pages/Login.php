@@ -2,62 +2,67 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Pages\Auth\Login as BaseLogin;
-use Filament\Forms\Form;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\View;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Validation\ValidationException;
+use Filament\Forms\Components\Placeholder;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Pages\Auth\Login as BaseLogin;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
+use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 
 class Login extends BaseLogin
 {
-    public ?string $email = '';
-    public ?string $password = '';
-    public ?string $captcha = '';
-    public bool $remember = false;
-
-    public function form(Form $form): Form
+    protected function getForms(): array
     {
-        return $form->schema([
-            TextInput::make('email')
-                ->label('Email')
-                ->required()
-                ->email(),
-
-            TextInput::make('password')
-                ->label('Password')
-                ->password()
-                ->required(),
-
-            TextInput::make('captcha')
-                ->label('Kode Keamanan')
-                ->required(),
-
-            View::make('components.captcha'),
-        ]);
+        return [
+            'form' => $this->form(
+                $this->makeForm()
+                    ->schema([
+                        $this->getEmailFormComponent(),
+                        $this->getPasswordFormComponent(),
+                        // $this->getRememberFormComponent(),
+                        Placeholder::make('captcha_image')
+                            ->label('')
+                            ->content(fn () => new \Illuminate\Support\HtmlString(captcha_img('default')))
+                            ->columnSpanFull(),
+                        TextInput::make('captcha')
+                            ->required()
+                            ->rules(['required', 'captcha'])
+                            ->validationMessages([
+                                'captcha' => 'Captcha salah, coba lagi.',
+                            ])
+                            ->columnSpanFull(),
+                    ])
+                    ->statePath('data'),
+            ),
+        ];
     }
 
     public function authenticate(): ?LoginResponse
     {
-        if (!captcha_check($this->captcha)) {
-            throw ValidationException::withMessages([
-                'captcha' => 'Kode captcha salah.',
-            ]);
+        try {
+            $this->rateLimit(5);
+        } catch (TooManyRequestsException $exception) {
+            $this->getRateLimitedNotification($exception)?->send();
+            return null;
         }
 
-        if (!Auth::attempt([
-            'email' => $this->email,
-            'password' => $this->password,
-        ], $this->remember)) {
-            throw ValidationException::withMessages([
-                'email' => __('filament-panels::pages/auth/login.messages.failed'),
-            ]);
+        $data = $this->form->getState();
+
+        if (! Filament::auth()->attempt($this->getCredentialsFromFormData($data), $data['remember'] ?? false)) {
+            $this->throwFailureValidationException();
+        }
+
+        $user = Filament::auth()->user();
+
+        if (($user instanceof FilamentUser) && (! $user->canAccessPanel(Filament::getCurrentPanel()))) {
+            Filament::auth()->logout();
+            $this->throwFailureValidationException();
         }
 
         session()->regenerate();
 
         return app(LoginResponse::class);
     }
+
 }

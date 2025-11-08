@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('att_id');
             $table->string('nama_instansi');
             $table->timestamps();
-            $table->foreign('att_id')->references('id')->on('att_daftarhadir')->onDelete('cascade');
+            $table->foreign('att_id')->references('id')->on('att_daftarhadirs')->onDelete('cascade');
         });
     }
 

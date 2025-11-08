@@ -71,6 +71,7 @@
     <div id="preloader"></div>
 
     <!-- Vendor JS Files -->
+
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
     <script src="{{ asset('vendor/aos/aos.js') }}"></script>
@@ -82,7 +83,6 @@
 
     <!-- Main JS File -->
     <script src="{{ asset('js/main.js') }}"></script>
-
     <script>
         window.addEventListener('icon-selected', function (event) {
             const selectedIcon = event.detail;
@@ -93,7 +93,5 @@
             }
         });
     </script>
-
-
     </body>
 </html>

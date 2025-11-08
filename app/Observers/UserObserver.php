@@ -9,12 +9,12 @@ class UserObserver
     /**
      * Handle the User "created" event.
      */
-    public function created(User $user): void
-    {
-        if (!$user->hasRole('peserta')) {
-            $user->assignRole('peserta');
-        }
-    }
+    // public function created(User $user): void
+    // {
+    //     if (!$user->hasRole('peserta')) {
+    //         $user->assignRole('peserta');
+    //     }
+    // }
 
     /**
      * Handle the User "updated" event.

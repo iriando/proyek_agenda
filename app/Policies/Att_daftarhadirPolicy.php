@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Agenda;
+use App\Models\Att_Daftarhadir;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class AgendaPolicy
+class Att_DaftarhadirPolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class AgendaPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_agenda');
+        return $user->can('view_any_att::daftarhadir');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Agenda $agenda): bool
+    public function view(User $user, Att_Daftarhadir $attDaftarhadir): bool
     {
-        return $user->can('view_agenda');
+        return $user->can('view_att::daftarhadir');
     }
 
     /**
@@ -31,23 +31,23 @@ class AgendaPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_agenda');
+        return $user->can('create_att::daftarhadir');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Agenda $agenda): bool
+    public function update(User $user, Att_Daftarhadir $attDaftarhadir): bool
     {
-        return $user->can('update_agenda');
+        return $user->can('update_att::daftarhadir');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Agenda $agenda): bool
+    public function delete(User $user, Att_Daftarhadir $attDaftarhadir): bool
     {
-        return $user->can('delete_agenda');
+        return $user->can('delete_att::daftarhadir');
     }
 
     /**
@@ -55,15 +55,15 @@ class AgendaPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_agenda');
+        return $user->can('delete_any_att::daftarhadir');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Agenda $agenda): bool
+    public function forceDelete(User $user, Att_Daftarhadir $attDaftarhadir): bool
     {
-        return $user->can('force_delete_agenda');
+        return $user->can('force_delete_att::daftarhadir');
     }
 
     /**
@@ -71,15 +71,15 @@ class AgendaPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_agenda');
+        return $user->can('force_delete_any_att::daftarhadir');
     }
 
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Agenda $agenda): bool
+    public function restore(User $user, Att_Daftarhadir $attDaftarhadir): bool
     {
-        return $user->can('restore_agenda');
+        return $user->can('restore_att::daftarhadir');
     }
 
     /**
@@ -87,15 +87,15 @@ class AgendaPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_agenda');
+        return $user->can('restore_any_att::daftarhadir');
     }
 
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Agenda $agenda): bool
+    public function replicate(User $user, Att_Daftarhadir $attDaftarhadir): bool
     {
-        return $user->can('replicate_agenda');
+        return $user->can('replicate_att::daftarhadir');
     }
 
     /**
@@ -103,6 +103,6 @@ class AgendaPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_agenda');
+        return $user->can('reorder_att::daftarhadir');
     }
 }

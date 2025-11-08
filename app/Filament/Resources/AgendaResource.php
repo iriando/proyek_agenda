@@ -3,26 +3,20 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
-use App\Models\User;
 use Filament\Tables;
 use App\Models\Agenda;
-use App\Models\Peserta;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use App\Models\Att_daftarhadir;
 use Filament\Resources\Resource;
-use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Section;
-use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AgendaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AgendaResource\RelationManagers;
 use App\Filament\Resources\AgendaResource\RelationManagers\MateriRelationManager;
 use App\Filament\Resources\AgendaResource\RelationManagers\PesertaRelationManager;
-use App\Filament\Resources\AgendaResource\RelationManagers\PemateriRelationManager;
-use App\Models\Att_daftarhadir;
-use App\Models\Instansi;
 
 class AgendaResource extends Resource
 {
@@ -34,14 +28,6 @@ class AgendaResource extends Resource
     public static function getRecordRouteKeyName(): string
     {
         return 'slug';
-    }
-
-    public static function shouldRegisterNavigation(): bool
-    {
-        if (auth()->user()->can('view agenda'))
-            return true;
-        else
-            return false;
     }
 
     public static function form(Form $form): Form
@@ -60,43 +46,48 @@ class AgendaResource extends Resource
                         ->required()
                         ->unique(Agenda::class, 'slug')
                         ->disabled(),
-                    Forms\Components\TextArea::make('deskripsi'),
-                    Forms\Components\TextInput::make('zoomlink')
-                        ->maxLength(191),
-                    Forms\Components\TextInput::make('slidolink')
-                        ->maxLength(191),
-                    Forms\Components\DateTimePicker::make('tanggal_pelaksanaan')
-                        ->label('waktu dan tanggal pelaksanaan')
-                        ->displayFormat('Y-m-d H:i:s')
-                        ->required(),
-                    Forms\Components\DateTimePicker::make('tanggal_selesai')
-                        ->label('waktu dan tanggal selesai')
-                        ->displayFormat('Y-m-d H:i:s')
-                        ->required(),
-                    Forms\Components\FileUpload::make('poster')
+                    // Forms\Components\TextArea::make('desc'),
+                    Forms\Components\Textarea::make('deskripsi'),
+                    Forms\Components\Grid::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('zoomlink')
+                            ->maxLength(191),
+                        Forms\Components\TextInput::make('slidolink')
+                            ->maxLength(191),
+                        Forms\Components\DateTimePicker::make('tanggal_pelaksanaan')
+                            ->label('waktu dan tanggal pelaksanaan')
+                            ->displayFormat('Y-m-d H:i:s')
+                            ->required(),
+                        Forms\Components\DateTimePicker::make('tanggal_selesai')
+                            ->label('waktu dan tanggal selesai')
+                            ->displayFormat('Y-m-d H:i:s')
+                            ->required(),
+                        Forms\Components\FileUpload::make('poster')
                         ->disk('public')
                         ->directory('poster')
                         ->image()
                         ->reorderable(),
-                    Forms\Components\FileUpload::make('vb')
-                        ->label('Virtual Background')
-                        ->disk('public')
-                        ->directory('vb')
-                        ->image()
-                        ->reorderable(),
-                    Forms\Components\Select::make('att_daftarhadir_id')
-                        ->label('Pilih grup instansi daftar hadir')
-                        ->options(Att_daftarhadir::all()->pluck('title', 'id')),
-                    // Forms\Components\FileUpload::make('certificate_template')
-                    //     ->label('Template Sertifikat (Word .docx)')
-                    //     ->disk('public')
-                    //     ->directory('certificates')
-                    //     ->acceptedFileTypes(['application/vnd.openxmlformats-officedocument.wordprocessingml.document'])
-                    //     ->preserveFilenames()
-                    //     ->downloadable(),
-                    Forms\Components\TextInput::make('linksertifikat')
-                        ->label('Link Sertifikat')
-                        ->maxLength(191),
+                        Forms\Components\FileUpload::make('vb')
+                            ->label('Virtual Background')
+                            ->disk('public')
+                            ->directory('vb')
+                            ->image()
+                            ->reorderable(),
+                        Forms\Components\Select::make('att_daftarhadir_id')
+                            ->label('Pilih grup instansi daftar hadir')
+                            ->options(Att_daftarhadir::all()->pluck('title', 'id')),
+                        // Forms\Components\FileUpload::make('certificate_template')
+                        //     ->label('Template Sertifikat (Word .docx)')
+                        //     ->disk('public')
+                        //     ->directory('certificates')
+                        //     ->acceptedFileTypes(['application/vnd.openxmlformats-officedocument.wordprocessingml.document'])
+                        //     ->preserveFilenames()
+                        //     ->downloadable(),
+                        Forms\Components\TextInput::make('linksertifikat')
+                            ->label('Link Sertifikat')
+                            ->maxLength(191),
+                    ])
+                    ->columns(2),
                 ]),
                 // Section::make('pilih Pemateri')
                 // ->schema([
@@ -223,7 +214,7 @@ class AgendaResource extends Resource
     {
         return [
             MateriRelationManager::class,
-            PemateriRelationManager::class,
+            // PemateriRelationManager::class,
             PesertaRelationManager::class,
         ];
     }
@@ -233,7 +224,6 @@ class AgendaResource extends Resource
         return [
             'index' => Pages\ListAgendas::route('/'),
             'create' => Pages\CreateAgenda::route('/create'),
-            'view' => Pages\ViewAgenda::route('/{record}'),
             'edit' => Pages\EditAgenda::route('/{record}/edit'),
         ];
     }
@@ -242,5 +232,4 @@ class AgendaResource extends Resource
     {
         return 'Kegiatan';
     }
-
 }

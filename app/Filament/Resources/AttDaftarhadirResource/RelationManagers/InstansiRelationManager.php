@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\AttributeDaftarHadirResource\RelationManagers;
+namespace App\Filament\Resources\AttDaftarhadirResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class InstansiRelationManager extends RelationManager
 {
-    protected static string $relationship = 'instansi';
+    protected static string $relationship = 'Instansi';
 
     public function form(Form $form): Form
     {

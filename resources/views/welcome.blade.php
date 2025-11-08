@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <main class="main">
 
         <!-- Hero Section -->
@@ -28,7 +29,6 @@
                     </a>
                 </div>
             </div>
-
 
         </section><!-- /Hero Section -->
 

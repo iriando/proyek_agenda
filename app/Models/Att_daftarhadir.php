@@ -12,7 +12,7 @@ class Att_daftarhadir extends Model
     protected $fillable = [
         'title',
         'description',
-        'is_active',
+        'duplikat',
     ];
 
     // public function agenda(){

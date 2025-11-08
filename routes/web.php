@@ -52,5 +52,5 @@ Route::get('/tes', function () {
     return view('layouts.app_new');
 });
 
-Route::get('/admin/detail-report/{record}', DetailReport::class)->name('filament.admin.pages.detail-report');
+// Route::get('/admin/detail-report/{record}', DetailReport::class)->name('filament.admin.pages.detail-report');
 

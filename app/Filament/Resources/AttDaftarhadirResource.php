@@ -4,24 +4,21 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
-use App\Models\Agenda;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
-use App\Models\Att_daftarhadir;
+use App\Models\Att_Daftarhadir;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\AttributeDaftarHadirResource\Pages;
-use App\Filament\Resources\AttributeDaftarHadirResource\RelationManagers;
-use App\Filament\Resources\AttributeDaftarHadirResource\RelationManagers\PesertaRelationManager;
-use App\Filament\Resources\AttributeDaftarHadirResource\RelationManagers\InstansiRelationManager;
+use App\Filament\Resources\AttDaftarhadirResource\Pages;
+use App\Filament\Resources\AttDaftarhadirResource\RelationManagers;
+use App\Filament\Resources\AttDaftarhadirResource\RelationManagers\InstansiRelationManager;
 
-class AttributeDaftarHadirResource extends Resource
+class AttDaftarhadirResource extends Resource
 {
-    protected static ?string $model = Att_daftarhadir::class;
+    protected static ?string $model = Att_Daftarhadir::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-list-bullet';
-
     protected static ?string $navigationLabel = 'Daftar Hadir';
 
     public static function form(Form $form): Form
@@ -87,15 +84,19 @@ class AttributeDaftarHadirResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAttributeDaftarHadirs::route('/'),
-            'create' => Pages\CreateAttributeDaftarHadir::route('/create'),
-            'view' => Pages\ViewAttributeDaftarHadir::route('/{record}'),
-            'edit' => Pages\EditAttributeDaftarHadir::route('/{record}/edit'),
+            'index' => Pages\ListAttDaftarhadirs::route('/'),
+            'create' => Pages\CreateAttDaftarhadir::route('/create'),
+            'edit' => Pages\EditAttDaftarhadir::route('/{record}/edit'),
         ];
     }
 
     public static function getPluralModelLabel(): string
     {
         return 'Daftar Hadir';
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Pengaturan';
     }
 }

@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('link_adds', function (Blueprint $table) {
-            $table->string('icon');
+        Schema::table('agendas', function (Blueprint $table) {
+            $table->string('att_daftarhadir_id')->nullable();
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('link_adds', function (Blueprint $table) {
+        Schema::table('agendas', function (Blueprint $table) {
             //
         });
     }

@@ -13,10 +13,7 @@ class ListAgendas extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()
-            ->label('Buat agenda baru'),
+            Actions\CreateAction::make(),
         ];
     }
-
-
 }

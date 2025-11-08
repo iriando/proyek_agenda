@@ -3,42 +3,33 @@
 namespace App\Filament\Resources\AgendaResource\RelationManagers;
 
 use Filament\Forms;
-use App\Models\User;
-use Filament\Tables;
 use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables;
 use Filament\Tables\Table;
-use Spatie\Permission\Models\Role;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Resources\RelationManagers\RelationManager;
 
 class PemateriRelationManager extends RelationManager
 {
-    protected static string $relationship = 'pemateri';
-
+    protected static string $relationship = 'Pemateri';
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                ->label('Pilih nama pemateri')
-                // ->multiple()
-                ->searchable()
-                ->options(User::query()->role('pemateri')->pluck('name', 'id'))
-                ->searchable()
-                ->required(),
+                Forms\Components\TextInput::make('user_id')
+                    ->required()
+                    ->maxLength(255),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('nama')
+            ->recordTitleAttribute('user_id')
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
-                ->label('Nama'),
-                Tables\Columns\TextColumn::make('user.roles.name')
+                Tables\Columns\TextColumn::make('user_id'),
             ])
             ->filters([
                 //
@@ -47,7 +38,6 @@ class PemateriRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -55,9 +45,6 @@ class PemateriRelationManager extends RelationManager
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ])
-            ->emptyStateActions([
-                // Tables\Actions\CreateAction::make(),
             ]);
     }
 }
