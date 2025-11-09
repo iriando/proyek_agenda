@@ -12,9 +12,16 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        $agendasBerjalan = Agenda::all()->filter(fn ($agenda) => in_array($agenda->status, ['Belum Dimulai', 'Sedang Berlangsung']));
-        $agendasSelesai = Agenda::all()->filter(fn ($agenda) => $agenda->status === 'Selesai');
-        $agenda = Agenda::with(['materi', 'pemateri', 'peserta', 'surveys'])->orderBy('created_at', 'desc')->take(3)->get();
+        $agendasBerjalan = Agenda::all()
+            ->filter(fn ($agenda) => in_array($agenda->status, ['Belum Dimulai', 'Sedang Berlangsung']));
+        // $agendasSelesai = Agenda::all()->filter(fn ($agenda) => $agenda->status === 'Selesai');
+        $agendasSelesai = Agenda::all()
+            ->sortByDesc('created_at')
+            ->filter(fn ($agenda) => $agenda->status === 'Selesai');
+        $agenda = Agenda::with(['materi', 'pemateri', 'peserta', 'surveys'])
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->get();
         return view('welcome', compact('agendasBerjalan', 'agendasSelesai', 'agenda'));
     }
 
@@ -47,14 +54,8 @@ class AgendaController extends Controller
         ])
         ->where('slug', $slug)
         ->firstOrFail();
-
         $agendaBaru = Agenda::orderBy('created_at', 'asc')->take(3)->get();
-
         return view('show', compact('agenda', 'agendaBaru'));
-
-        // $agenda = Agenda::where('slug', $slug)->with(['surveys', 'links'])->firstOrFail();
-        // $agendaBaru = Agenda::orderBy('created_at', 'asc')->take(3)->get();
-        // return view('show', compact('agenda','agendaBaru'));
     }
 
     /**
