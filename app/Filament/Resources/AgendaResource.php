@@ -225,6 +225,7 @@ class AgendaResource extends Resource
             'index' => Pages\ListAgendas::route('/'),
             'create' => Pages\CreateAgenda::route('/create'),
             'edit' => Pages\EditAgenda::route('/{record}/edit'),
+            'view' => Pages\ViewAgenda::route('/{record}'),
         ];
     }
 

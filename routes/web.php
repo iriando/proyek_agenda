@@ -48,9 +48,9 @@ Route::post('/survey/{slug}/{survey}', [SurveyController::class, 'submit'])->nam
 Route::get('/daftar-hadir/{slug}', [PesertaController::class, 'show'])->name('peserta.show');
 Route::post('/daftar-hadir/{slug}', [PesertaController::class, 'store'])->name('peserta.store');
 
-Route::get('/tes', function () {
-    return view('layouts.app_new');
-});
+// Route::get('/tes', function () {
+//     return view('layouts.app_new');
+// });
 
 // Route::get('/admin/detail-report/{record}', DetailReport::class)->name('filament.admin.pages.detail-report');
 

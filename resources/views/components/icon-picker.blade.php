@@ -1,16 +1,21 @@
-<div class="w-full max-w-none px-2">
-    <div class="grid grid-cols-3 gap-1">
+<div class="w-full px-2">
+    <label class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
+        Pilih Icon
+    </label>
+
+    <div class="flex flex-wrap justify-start gap-4">
         @foreach ($icons as $icon => $label)
-            <div class="flex flex-col items-center space-y-1">
+            <div class="w-1/3 flex flex-col items-center space-y-1 text-center">
                 <input type="radio" id="icon-{{ $loop->index }}" name="icon" value="{{ $icon }}"
                     class="sr-only icon-radio"
                     @checked($getRecord()?->icon === $icon)
                     onchange="window.dispatchEvent(new CustomEvent('icon-selected', { detail: '{{ $icon }}' }))">
+
                 <label for="icon-{{ $loop->index }}" class="cursor-pointer flex flex-col items-center space-y-1">
-                    <div class="p-3 border rounded transition-all" data-icon="{{ $icon }}">
+                    <div class="p-3 border rounded-lg transition-all hover:bg-gray-100" data-icon="{{ $icon }}">
                         <x-dynamic-component :component="$icon" class="w-6 h-6 text-gray-700" />
                     </div>
-                    <span class="text-xs text-center text-gray-600">{{ $label }}</span>
+                    <span class="text-xs text-gray-600">{{ $label }}</span>
                 </label>
             </div>
         @endforeach
