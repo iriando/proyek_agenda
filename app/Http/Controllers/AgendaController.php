@@ -54,7 +54,7 @@ class AgendaController extends Controller
         ])
         ->where('slug', $slug)
         ->firstOrFail();
-        $agendaBaru = Agenda::orderBy('created_at', 'asc')->take(3)->get();
+        $agendaBaru = Agenda::orderBy('created_at', 'desc')->take(3)->get();
         return view('show', compact('agenda', 'agendaBaru'));
     }
 
