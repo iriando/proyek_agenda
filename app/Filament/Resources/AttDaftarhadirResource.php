@@ -6,7 +6,7 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
-use App\Models\Att_Daftarhadir;
+use App\Models\Att_daftarhadir;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -16,7 +16,7 @@ use App\Filament\Resources\AttDaftarhadirResource\RelationManagers\InstansiRelat
 
 class AttDaftarhadirResource extends Resource
 {
-    protected static ?string $model = Att_Daftarhadir::class;
+    protected static ?string $model = Att_daftarhadir::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-list-bullet';
     protected static ?string $navigationLabel = 'Daftar Hadir';

@@ -52,7 +52,7 @@
                                 @if ($agenda->poster)
                                     <div class="post-img">
                                         {{-- <img src="uploads/{{$agenda->poster}}" alt="" class="img-fluid"> --}}
-                                        <img src="{{ $agenda->poster }}" alt="" class="img-fluid">
+                                        <img src="uploads/{{ $agenda->poster }}" alt="" class="img-fluid">
                                     </div>
                                 @endif
                                 <span
